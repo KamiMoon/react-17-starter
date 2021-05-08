@@ -44,3 +44,33 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## Dependencies
+
+Uses:
+
+- [yarn](https://yarnpkg.com/en/)
+- [react-router-dom](https://reacttraining.com/react-router/web/example/basic)
+- [axios](https://github.com/axios/axios)
+- [redux](https://redux.js.org/)
+- [react-redux](https://github.com/reduxjs/react-redux)
+- [redux-axios-middleware](https://github.com/svrcekmichal/redux-axios-middleware)
+- [redux-form](https://redux-form.com/7.4.2/)
+- [material-ui](https://material-ui.com/)
+
+## Formatting
+
+We are using [Prettier](https://github.com/prettier/prettier).
+
+Install and use the VSCode extension with workspace setting with `"editor.formatOnSave": true,`
+See .prettierrc
+
+## Deployment
+
+Will automatically deploy via merges into relevant branches using Code Pipeline.
+
+## URLs
+
+| ENVIRONMENT | URL  |
+| :---------: | :--: |
+|    PROD     | TODO |
