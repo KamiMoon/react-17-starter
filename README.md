@@ -74,3 +74,8 @@ Will automatically deploy via merges into relevant branches using Code Pipeline.
 | ENVIRONMENT | URL  |
 | :---------: | :--: |
 |    PROD     | TODO |
+
+## TODOs:
+
+- Auth
+- Lazy loading
