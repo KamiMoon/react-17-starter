@@ -13,6 +13,9 @@ export default function Navbar() {
         <li>
           <Link to="/crud">Crud</Link>
         </li>
+        <li>
+          <Link to="/users">Users</Link>
+        </li>
       </ul>
     </div>
   );
