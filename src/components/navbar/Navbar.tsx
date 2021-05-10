@@ -1,6 +1,15 @@
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { fetchNotifications } from "../../redux/slicers/notificationSlice";
 
 export default function Navbar() {
+  const dispatch = useDispatch();
+
+  const fetchNewNotifications = () => {
+    dispatch(fetchNotifications());
+  };
+
   return (
     <div>
       <ul>
@@ -16,7 +25,13 @@ export default function Navbar() {
         <li>
           <Link to="/users">Users</Link>
         </li>
+        <li>
+          <Link to="/notifications">Notifications</Link>
+        </li>
       </ul>
+      <button className="button" onClick={fetchNewNotifications}>
+        Refresh Notifications
+      </button>
     </div>
   );
 }

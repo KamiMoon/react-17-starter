@@ -2,12 +2,14 @@ import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./slicers/counterSlice";
 import postReducer from "./slicers/postsSlice";
 import userReducer from "./slicers/usersSlice";
+import notificationReducer from "./slicers/notificationSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     posts: postReducer,
     users: userReducer,
+    notifications: notificationReducer,
   },
 });
 
