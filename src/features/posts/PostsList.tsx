@@ -5,26 +5,16 @@ import { PostAuthor } from "./PostAuthor";
 import { TimeAgo } from "./TimeAgo";
 import { ReactionButtons } from "./ReactionButtons";
 
-import { selectAllPosts, fetchPosts } from "../../redux/slicers/postsSlice";
+import {
+  selectAllPosts,
+  fetchPosts,
+  selectPostIds,
+  selectPostById,
+} from "../../redux/slicers/postsSlice";
 
-export const PostsList = () => {
-  const dispatch = useDispatch();
-  const posts = useSelector(selectAllPosts);
-
-  const postStatus = useSelector((state: any) => state.posts.status);
-  const error = useSelector((state: any) => state.posts.error);
-
-  useEffect(() => {
-    if (postStatus === "idle") {
-      dispatch(fetchPosts());
-    }
-  }, [postStatus, dispatch]);
-
-  // Sort posts in reverse chronological order by datetime string
-  const orderedPosts = posts
-    .slice()
-    .sort((a, b) => b.date.localeCompare(a.date));
-  const renderedPosts = orderedPosts.map((post: any) => (
+let PostExcerpt = ({ postId }) => {
+  const post = useSelector((state) => selectPostById(state, postId));
+  return (
     <article className="post-excerpt" key={post.id}>
       <h3>{post.title}</h3>
       <p className="post-content">{post.content.substring(0, 100)}</p>
@@ -37,6 +27,29 @@ export const PostsList = () => {
         View Post
       </Link>
     </article>
+  );
+};
+
+export const PostsList = () => {
+  const dispatch = useDispatch();
+  //const posts = useSelector(selectAllPosts);
+  const orderedPostIds = useSelector(selectPostIds);
+
+  const postStatus = useSelector((state: any) => state.posts.status);
+  const error = useSelector((state: any) => state.posts.error);
+
+  useEffect(() => {
+    if (postStatus === "idle") {
+      dispatch(fetchPosts());
+    }
+  }, [postStatus, dispatch]);
+
+  // Sort posts in reverse chronological order by datetime string
+  // const orderedPosts = posts
+  //   .slice()
+  //   .sort((a, b) => b.date.localeCompare(a.date));
+  const renderedPosts = orderedPostIds.map((postId: any) => (
+    <PostExcerpt key={postId} postId={postId} />
   ));
 
   let content;

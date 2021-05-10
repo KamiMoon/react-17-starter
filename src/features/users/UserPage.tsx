@@ -3,17 +3,19 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { selectUserById } from "../../redux/slicers/usersSlice";
-import { selectAllPosts } from "../../redux/slicers/postsSlice";
+import {
+  selectAllPosts,
+  selectPostsByUser,
+} from "../../redux/slicers/postsSlice";
 
 export const UserPage = ({ match }) => {
   const { userId } = match.params;
 
   const user = useSelector((state) => selectUserById(state, userId));
 
-  const postsForUser = useSelector((state: any) => {
-    const allPosts = selectAllPosts(state);
-    return allPosts.filter((post) => post.user === userId);
-  });
+  const postsForUser = useSelector((state: any) =>
+    selectPostsByUser(state, userId)
+  );
 
   const postTitles = postsForUser.map((post) => (
     <li key={post.id}>
