@@ -6,8 +6,11 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
+import { fetchUsers } from "./redux/slicers/usersSlice";
 
 import "./api/server";
+
+store.dispatch(fetchUsers());
 
 ReactDOM.render(
   <React.StrictMode>

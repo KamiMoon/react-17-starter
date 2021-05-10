@@ -10,11 +10,9 @@ import { selectAllPosts, fetchPosts } from "../../redux/slicers/postsSlice";
 export const PostsList = () => {
   const dispatch = useDispatch();
   const posts = useSelector(selectAllPosts);
-  const orderedPosts = posts
-    .slice()
-    .sort((a: any, b: any) => b.date.localeCompare(a.date));
 
   const postStatus = useSelector((state: any) => state.posts.status);
+  const error = useSelector((state: any) => state.posts.error);
 
   useEffect(() => {
     if (postStatus === "idle") {
@@ -22,6 +20,10 @@ export const PostsList = () => {
     }
   }, [postStatus, dispatch]);
 
+  // Sort posts in reverse chronological order by datetime string
+  const orderedPosts = posts
+    .slice()
+    .sort((a, b) => b.date.localeCompare(a.date));
   const renderedPosts = orderedPosts.map((post: any) => (
     <article className="post-excerpt" key={post.id}>
       <h3>{post.title}</h3>
@@ -37,10 +39,20 @@ export const PostsList = () => {
     </article>
   ));
 
+  let content;
+
+  if (postStatus === "loading") {
+    content = <div className="loader">Loading...</div>;
+  } else if (postStatus === "succeeded") {
+    content = renderedPosts;
+  } else if (postStatus === "failed") {
+    content = <div>{error}</div>;
+  }
+
   return (
     <section className="posts-list">
       <h2>Posts</h2>
-      {renderedPosts}
+      {content}
     </section>
   );
 };
