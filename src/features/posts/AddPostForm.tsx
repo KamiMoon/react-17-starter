@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 import { addNewPost } from "../../redux/slicers/postsSlice";
+import { selectAllUsers } from "../../redux/slicers/usersSlice";
 
 export const AddPostForm = () => {
   const [title, setTitle] = useState("");
@@ -12,7 +13,7 @@ export const AddPostForm = () => {
 
   const dispatch = useDispatch();
 
-  const users = useSelector((state: any) => state.users);
+  const users = useSelector(selectAllUsers);
 
   const onTitleChanged = (e: any) => setTitle(e.target.value);
   const onContentChanged = (e: any) => setContent(e.target.value);
