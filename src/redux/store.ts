@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "./slicers/counterSlice";
 import postReducer from "./slicers/postsSlice";
+import userReducer from "./slicers/usersSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     posts: postReducer,
+    users: userReducer,
   },
 });
 
