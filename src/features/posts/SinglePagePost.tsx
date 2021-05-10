@@ -5,12 +5,12 @@ import { PostAuthor } from "./PostAuthor";
 import { TimeAgo } from "./TimeAgo";
 import { ReactionButtons } from "./ReactionButtons";
 
+import { selectPostById } from "../../redux/slicers/postsSlice";
+
 export const SinglePostPage = ({ match }: any) => {
   const { postId } = match.params;
 
-  const post = useSelector((state: any) =>
-    state.posts.find((post: any) => post.id === postId)
-  );
+  const post = useSelector((state: any) => selectPostById(state, postId));
 
   if (!post) {
     return (

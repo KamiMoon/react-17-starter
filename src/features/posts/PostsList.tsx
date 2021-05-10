@@ -1,15 +1,26 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { PostAuthor } from "./PostAuthor";
 import { TimeAgo } from "./TimeAgo";
 import { ReactionButtons } from "./ReactionButtons";
 
+import { selectAllPosts, fetchPosts } from "../../redux/slicers/postsSlice";
+
 export const PostsList = () => {
-  const posts = useSelector((state: any) => state.posts);
+  const dispatch = useDispatch();
+  const posts = useSelector(selectAllPosts);
   const orderedPosts = posts
     .slice()
     .sort((a: any, b: any) => b.date.localeCompare(a.date));
+
+  const postStatus = useSelector((state: any) => state.posts.status);
+
+  useEffect(() => {
+    if (postStatus === "idle") {
+      dispatch(fetchPosts());
+    }
+  }, [postStatus, dispatch]);
 
   const renderedPosts = orderedPosts.map((post: any) => (
     <article className="post-excerpt" key={post.id}>
