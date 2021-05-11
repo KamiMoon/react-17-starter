@@ -5,6 +5,8 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { addNewPost } from "../../redux/slicers/postsSlice";
 import { selectAllUsers } from "../../redux/slicers/usersSlice";
 
+import { Button } from "antd";
+
 export const AddPostForm = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -72,9 +74,9 @@ export const AddPostForm = () => {
           value={content}
           onChange={onContentChanged}
         />
-        <button type="button" onClick={onSavePostClicked} disabled={!canSave}>
+        <Button type="primary" onClick={onSavePostClicked} disabled={!canSave}>
           Save Post
-        </button>
+        </Button>
       </form>
     </section>
   );

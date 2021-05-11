@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-import logo from "./logo.svg";
-import "./App.css";
+
 import Navbar from "./components/navbar/Navbar";
 import Login from "./auth/Login";
 import Crud from "./crud/Crud";
@@ -12,6 +11,7 @@ import { EditPostForm } from "./features/posts/EditPostForm";
 import { UsersList } from "./features/users/UsersList";
 import { UserPage } from "./features/users/UserPage";
 import { NotificationsList } from "./features/notifications/NotificationList";
+import "./App.css";
 
 function App() {
   return (
