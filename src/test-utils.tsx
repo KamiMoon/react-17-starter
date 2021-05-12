@@ -1,21 +1,27 @@
-// test-utils.js
 import React from "react";
 import { render as rtlRender } from "@testing-library/react";
-import { createStore } from "redux";
+//import { createStore } from "redux";
+import { configureStore } from "@reduxjs/toolkit";
+
 import { Provider } from "react-redux";
 // Import your own reducer
-import rootReducer from "../src/redux/rootReducer";
+import rootReducer from "./redux/rootReducer";
 import { MemoryRouter } from "react-router-dom";
 
 function render(
-  ui,
+  ui: JSX.Element,
   {
     initialState,
-    store = createStore(rootReducer, initialState),
+    //store = createStore(rootReducer, initialState),
+
+    store = configureStore({
+      reducer: rootReducer,
+      preloadedState: initialState,
+    }),
     ...renderOptions
-  } = {}
+  }: any = {}
 ) {
-  function Wrapper({ children }) {
+  function Wrapper({ children }: any) {
     return (
       <Provider store={store}>
         <MemoryRouter>{children}</MemoryRouter>

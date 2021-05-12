@@ -1,5 +1,5 @@
 import { SinglePostPage } from "./SinglePagePost";
-import { render, screen } from "../../testUtils";
+import { render, screen } from "../../test-utils";
 
 test("renders - no post", () => {
   render(<SinglePostPage match={{ params: { postId: "1" } }} />, {
