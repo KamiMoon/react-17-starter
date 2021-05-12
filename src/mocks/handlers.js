@@ -1,6 +1,21 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
 
+const post = {
+  id: "1",
+  date: new Date().toISOString(),
+  title: "My Title",
+  content: "My content",
+  user: 1,
+  reactions: {
+    thumbsUp: 0,
+    hooray: 0,
+    heart: 0,
+    rocket: 0,
+    eyes: 0,
+  },
+};
+
 export const handlers = [
   rest.post("/login", (req, res, ctx) => {
     // Persist user's authentication in the session
@@ -36,6 +51,6 @@ export const handlers = [
   }),
 
   rest.get("/fakeApi/posts", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json([]));
+    return res(ctx.status(200), ctx.json([post]));
   }),
 ];
