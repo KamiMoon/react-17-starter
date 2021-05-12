@@ -1,16 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterReducer from "./slicers/counterSlice";
-import postReducer from "./slicers/postsSlice";
-import userReducer from "./slicers/usersSlice";
-import notificationReducer from "./slicers/notificationSlice";
+import rootReducer from "./rootReducer";
 
 export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-    posts: postReducer,
-    users: userReducer,
-    notifications: notificationReducer,
-  },
+  reducer: rootReducer,
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
