@@ -26,3 +26,15 @@ beforeAll(() => server.listen());
 afterEach(() => server.resetHandlers());
 // Clean up after the tests are finished.
 afterAll(() => server.close());
+
+//mock out Ant Design Forms
+//https://github.com/ant-design/ant-design/issues/21096
+Object.defineProperty(window, "matchMedia", {
+  value: () => {
+    return {
+      matches: false,
+      addListener: () => {},
+      removeListener: () => {},
+    };
+  },
+});
