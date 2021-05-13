@@ -5,6 +5,6 @@ test("renders learn react link", () => {
   render(<App />, {
     initialState: {},
   });
-  const linkElement = screen.getByText(/Home/i);
-  expect(linkElement).toBeInTheDocument();
+  const text = screen.getAllByText(/Posts/i);
+  expect(text[0]).toBeInTheDocument();
 });

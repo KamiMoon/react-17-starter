@@ -4,6 +4,6 @@ import { TimeAgo } from "./TimeAgo";
 
 test("renders", () => {
   render(<TimeAgo timestamp={"2021-05-05T07:08:33.754Z"} />);
-  const linkElement = screen.getByText("7 days ago");
+  const linkElement = screen.getByText(/days ago/i);
   expect(linkElement).toBeInTheDocument();
 });

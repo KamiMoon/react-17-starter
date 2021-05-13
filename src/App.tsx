@@ -13,35 +13,48 @@ import { UserPage } from "./features/users/UserPage";
 import { NotificationsList } from "./features/notifications/NotificationList";
 import "./App.css";
 
+import { Layout } from "antd";
+const { Content, Footer } = Layout;
+
 function App() {
   return (
     <div>
-      <Navbar />
-
-      <Switch>
-        <Route path="/crud">
-          <Crud />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <React.Fragment>
-              <AddPostForm />
-              <PostsList />
-            </React.Fragment>
-          )}
-        />
-        <Route exact path="/posts/:postId" component={SinglePostPage} />
-        <Route exact path="/editPost/:postId" component={EditPostForm} />
-        <Route exact path="/users" component={UsersList} />
-        <Route exact path="/users/:userId" component={UserPage} />
-        <Route exact path="/notifications" component={NotificationsList} />
-        <Redirect to="/" />
-      </Switch>
+      <Layout className="layout">
+        <Navbar />
+        <Content style={{ padding: "0 50px" }}>
+          <div className="site-layout-content">
+            <Switch>
+              <Route path="/crud">
+                <Crud />
+              </Route>
+              <Route path="/login">
+                <Login />
+              </Route>
+              <Route
+                exact
+                path="/"
+                render={() => (
+                  <React.Fragment>
+                    <AddPostForm />
+                    <PostsList />
+                  </React.Fragment>
+                )}
+              />
+              <Route exact path="/posts/:postId" component={SinglePostPage} />
+              <Route exact path="/editPost/:postId" component={EditPostForm} />
+              <Route exact path="/users" component={UsersList} />
+              <Route exact path="/users/:userId" component={UserPage} />
+              <Route
+                exact
+                path="/notifications"
+                component={NotificationsList}
+              />
+              <Redirect to="/" />
+            </Switch>
+          </div>
+        </Content>
+        <Footer style={{ textAlign: "center" }}>Eric Kizaki 2021</Footer>
+      </Layout>
     </div>
   );
 }
