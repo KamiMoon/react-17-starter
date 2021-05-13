@@ -79,3 +79,7 @@ Will automatically deploy via merges into relevant branches using Code Pipeline.
 
 - Auth
 - Lazy loading
+
+## Bugs
+
+- Reloading page on the user list and clicking on user does not properly show posts. Have to go to posts page first.

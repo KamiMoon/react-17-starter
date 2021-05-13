@@ -3,20 +3,37 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectAllUsers } from "../../redux/slicers/usersSlice";
 
+import { Table, Tag, Space } from "antd";
+
+const columns = [
+  {
+    title: "Id",
+    dataIndex: "id",
+    key: "id",
+  },
+  {
+    title: "Username",
+    dataIndex: "username",
+    key: "username",
+  },
+  {
+    title: "Name",
+    dataIndex: "name",
+    key: "name",
+    render: (text: string, record: any) => {
+      return <Link to={`/users/${record.id}`}>{record.name}</Link>;
+    },
+  },
+];
+
 export const UsersList = () => {
   const users: any = useSelector(selectAllUsers);
-
-  const renderedUsers = users.map((user) => (
-    <li key={user.id}>
-      <Link to={`/users/${user.id}`}>{user.name}</Link>
-    </li>
-  ));
 
   return (
     <section>
       <h2>Users</h2>
 
-      <ul>{renderedUsers}</ul>
+      <Table columns={columns} dataSource={users} rowKey="id" />
     </section>
   );
 };
