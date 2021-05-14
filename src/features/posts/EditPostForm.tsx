@@ -1,54 +1,76 @@
-import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
 import { postUpdated, selectPostById } from "../../redux/slicers/postsSlice";
+
+import { Form, Input, Button } from "antd";
+
+const layout = {
+  labelCol: { span: 8 },
+  wrapperCol: { span: 16 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 8, span: 16 },
+};
 
 export const EditPostForm = ({ match }: any) => {
   const { postId } = match.params;
 
   const post = useSelector((state: any) => selectPostById(state, postId));
 
-  const [title, setTitle] = useState(post.title);
-  const [content, setContent] = useState(post.content);
-
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const onTitleChanged = (e: any) => setTitle(e.target.value);
-  const onContentChanged = (e: any) => setContent(e.target.value);
+  const onSavePostClicked = (values: any) => {
+    if (values.title && values.content) {
+      const title = values.title;
+      const content = values.content;
 
-  const onSavePostClicked = () => {
-    if (title && content) {
       dispatch(postUpdated({ id: postId, title, content }));
       history.push(`/posts/view/${postId}`);
     }
   };
 
+  const onFinishFailed = (errorInfo: any) => {
+    console.log("Failed:", errorInfo);
+  };
+
   return (
     <section>
       <h2>Edit Post</h2>
-      <form>
-        <label htmlFor="postTitle">Post Title:</label>
-        <input
-          type="text"
-          id="postTitle"
-          name="postTitle"
-          placeholder="What's on your mind?"
-          value={title}
-          onChange={onTitleChanged}
-        />
-        <label htmlFor="postContent">Content:</label>
-        <textarea
-          id="postContent"
-          name="postContent"
-          value={content}
-          onChange={onContentChanged}
-        />
-      </form>
-      <button type="button" onClick={onSavePostClicked}>
-        Save Post
-      </button>
+
+      <Form
+        {...layout}
+        name="basic"
+        initialValues={{
+          title: post.title,
+          content: post.content,
+          remember: true,
+        }}
+        onFinish={onSavePostClicked}
+        onFinishFailed={onFinishFailed}
+      >
+        <Form.Item
+          label="Post Title"
+          name="title"
+          rules={[{ required: true, message: "Please input your title!" }]}
+        >
+          <Input />
+        </Form.Item>
+        <Form.Item
+          label="Content"
+          name="content"
+          rules={[{ required: true, message: "Please input your content!" }]}
+        >
+          <Input.TextArea rows={6} />
+        </Form.Item>
+
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </section>
   );
 };
