@@ -1,41 +1,47 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useHistory } from "react-router-dom";
 
 import { addNewPost } from "../../redux/slicers/postsSlice";
 import { selectAllUsers } from "../../redux/slicers/usersSlice";
 
-import { Button } from "antd";
+import { Form, Input, Button, Select } from "antd";
+const { Option } = Select;
+
+const layout = {
+  labelCol: { span: 2 },
+  wrapperCol: { span: 22 },
+};
+const tailLayout = {
+  wrapperCol: { offset: 2, span: 22 },
+};
 
 export const AddPostForm = () => {
-  const [title, setTitle] = useState("");
-  const [content, setContent] = useState("");
-  const [userId, setUserId] = useState("");
   const [addRequestStatus, setAddRequestStatus] = useState("idle");
 
   const dispatch = useDispatch();
+  const history = useHistory();
 
   const users = useSelector(selectAllUsers);
 
-  const onTitleChanged = (e: any) => setTitle(e.target.value);
-  const onContentChanged = (e: any) => setContent(e.target.value);
-  const onAuthorChanged = (e: any) => setUserId(e.target.value);
+  const canSave = addRequestStatus === "idle";
 
-  const canSave =
-    [title, content, userId].every(Boolean) && addRequestStatus === "idle";
-
-  const onSavePostClicked = async () => {
+  const onSavePostClicked = async (values: any) => {
     if (canSave) {
       try {
+        const title = values.title;
+        const content = values.content;
+        const userId = values.userId;
+
         setAddRequestStatus("pending");
         const resultAction = await dispatch(
           addNewPost({ title, content, user: userId })
         );
         //required for normal try/catch logic to get the error
         unwrapResult(resultAction);
-        setTitle("");
-        setContent("");
-        setUserId("");
+
+        history.push(`/`);
       } catch (err) {
         console.error("Failed to save the post: ", err);
       } finally {
@@ -45,39 +51,49 @@ export const AddPostForm = () => {
   };
 
   const usersOptions = users.map((user: any) => (
-    <option key={user.id} value={user.id}>
+    <Option key={user.id} value={user.id}>
       {user.name}
-    </option>
+    </Option>
   ));
 
   return (
     <section>
       <h2>Add a New Post</h2>
-      <form>
-        <label htmlFor="postTitle">Post Title:</label>
-        <input
-          type="text"
-          id="postTitle"
-          name="postTitle"
-          value={title}
-          onChange={onTitleChanged}
-        />
-        <label htmlFor="postAuthor">Author:</label>
-        <select id="postAuthor" value={userId} onChange={onAuthorChanged}>
-          <option value=""></option>
-          {usersOptions}
-        </select>
-        <label htmlFor="postContent">Content:</label>
-        <textarea
-          id="postContent"
-          name="postContent"
-          value={content}
-          onChange={onContentChanged}
-        />
-        <Button type="primary" onClick={onSavePostClicked} disabled={!canSave}>
-          Save Post
-        </Button>
-      </form>
+
+      <Form
+        {...layout}
+        name="basic"
+        initialValues={{
+          remember: true,
+        }}
+        onFinish={onSavePostClicked}
+      >
+        <Form.Item
+          label="Post Title"
+          name="title"
+          rules={[{ required: true, message: "Please input your title!" }]}
+        >
+          <Input />
+        </Form.Item>
+
+        <Form.Item name="userId" label="User" rules={[{ required: true }]}>
+          <Select>{usersOptions}</Select>
+        </Form.Item>
+
+        <Form.Item
+          label="Content"
+          name="content"
+          rules={[{ required: true, message: "Please input your content!" }]}
+        >
+          <Input.TextArea rows={6} />
+        </Form.Item>
+
+        <Form.Item {...tailLayout}>
+          <Button type="primary" htmlType="submit">
+            Submit
+          </Button>
+        </Form.Item>
+      </Form>
     </section>
   );
 };

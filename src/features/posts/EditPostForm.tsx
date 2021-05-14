@@ -6,11 +6,11 @@ import { postUpdated, selectPostById } from "../../redux/slicers/postsSlice";
 import { Form, Input, Button } from "antd";
 
 const layout = {
-  labelCol: { span: 8 },
-  wrapperCol: { span: 16 },
+  labelCol: { span: 2 },
+  wrapperCol: { span: 22 },
 };
 const tailLayout = {
-  wrapperCol: { offset: 8, span: 16 },
+  wrapperCol: { offset: 2, span: 22 },
 };
 
 export const EditPostForm = ({ match }: any) => {
