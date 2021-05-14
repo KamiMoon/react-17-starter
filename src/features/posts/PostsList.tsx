@@ -23,7 +23,7 @@ let PostExcerpt = ({ postId }) => {
 
       <ReactionButtons post={post} />
 
-      <Link to={`/posts/${post.id}`} className="button muted-button">
+      <Link to={`/posts/view/${post.id}`} className="button muted-button">
         View Post
       </Link>
     </article>
@@ -65,6 +65,7 @@ export const PostsList = () => {
   return (
     <section className="posts-list">
       <h2>Posts</h2>
+      <Link to="/posts/add">Add Post</Link>
       {content}
     </section>
   );

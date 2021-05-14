@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { selectAllUsers } from "../../redux/slicers/usersSlice";
 
-import { Table, Tag, Space } from "antd";
+import { Table } from "antd";
 
 const columns = [
   {

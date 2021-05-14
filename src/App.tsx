@@ -30,18 +30,18 @@ function App() {
               <Route path="/login">
                 <Login />
               </Route>
+              <Route exact path="/" component={PostsList} />
               <Route
                 exact
-                path="/"
-                render={() => (
-                  <React.Fragment>
-                    <AddPostForm />
-                    <PostsList />
-                  </React.Fragment>
-                )}
+                path="/posts/view/:postId"
+                component={SinglePostPage}
               />
-              <Route exact path="/posts/:postId" component={SinglePostPage} />
-              <Route exact path="/editPost/:postId" component={EditPostForm} />
+              <Route
+                exact
+                path="/posts/edit/:postId"
+                component={EditPostForm}
+              />
+              <Route exact path="/posts/add" component={AddPostForm} />
               <Route exact path="/users" component={UsersList} />
               <Route exact path="/users/:userId" component={UserPage} />
               <Route
