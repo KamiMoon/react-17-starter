@@ -3,7 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 
 export default function PrivateRoute(props: any) {
   const { component: Component, ...rest } = props;
-  let auth = useAppSelector((state) => state.auth);
+  const auth = useAppSelector((state) => state.auth);
 
   return (
     <Route
