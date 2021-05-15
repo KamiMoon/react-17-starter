@@ -25,11 +25,11 @@ const Login = () => {
         login({ email: values.username, password: values.password })
       );
       unwrapResult(resultAction);
+      setAddRequestStatus("idle");
       history.push(`/users`);
     } catch (err) {
-      console.log(err);
-    } finally {
       setAddRequestStatus("idle");
+      console.log(err);
     }
   };
 

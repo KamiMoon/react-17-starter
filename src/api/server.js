@@ -76,7 +76,12 @@ new Server({
     this.post("/login", function (schema, req) {
       const result = {
         token: "abcd",
-        roles: [],
+        roles: [
+          {
+            name: "Admin",
+            isActive: true,
+          },
+        ],
       };
       return result;
     });

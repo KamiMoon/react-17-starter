@@ -1,8 +1,9 @@
 import React from "react";
 import { Route, Switch, Redirect } from "react-router-dom";
-
+import PrivateRoute from "./auth/PrivateRoute";
 import Navbar from "./components/navbar/Navbar";
 import Login from "./auth/Login";
+import NotAuthorized from "./auth/NotAuthorized";
 import Crud from "./crud/Crud";
 import { PostsList } from "./features/posts/PostsList";
 import { AddPostForm } from "./features/posts/AddPostForm";
@@ -30,6 +31,7 @@ function App() {
               <Route path="/login">
                 <Login />
               </Route>
+              <Route path="/not-authorized" component={NotAuthorized} />
               <Route exact path="/" component={PostsList} />
               <Route
                 exact
@@ -42,7 +44,7 @@ function App() {
                 component={EditPostForm}
               />
               <Route exact path="/posts/add" component={AddPostForm} />
-              <Route exact path="/users" component={UsersList} />
+              <PrivateRoute exact path="/users" component={UsersList} />
               <Route exact path="/users/:userId" component={UserPage} />
               <Route
                 exact

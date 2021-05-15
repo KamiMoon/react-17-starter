@@ -27,6 +27,21 @@ const initialState: AuthState = {
   error: null,
 };
 
+function hasRequiredPrivileges(
+  roles: Array<{ name: string; isActive: boolean }>
+) {
+  if (roles) {
+    const foundRoles = roles.filter((f) => {
+      return f.name === "Admin" && f.isActive === true;
+    });
+
+    if (foundRoles && foundRoles.length) {
+      return true;
+    }
+  }
+  return false;
+}
+
 export const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -45,6 +60,7 @@ export const authSlice = createSlice({
       state.isAuthenticated = true;
       state.token = action.payload.token;
       state.roles = action.payload.roles;
+      state.hasRequiredPrivileges = hasRequiredPrivileges(action.payload.roles);
     });
     builder.addCase(login.rejected, (state, action) => {
       state.status = "failed";
