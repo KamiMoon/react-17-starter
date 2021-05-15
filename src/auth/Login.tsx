@@ -1,10 +1,36 @@
+import { useState } from "react";
+
+import { useAppDispatch } from "../redux/hooks";
+import { useHistory } from "react-router-dom";
+import { unwrapResult } from "@reduxjs/toolkit";
+
+import { login } from "../redux/slicers/authSlice";
+
 import { Form, Input, Button, Checkbox } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./Login.css";
 
 const Login = () => {
-  const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+  const [addRequestStatus, setAddRequestStatus] = useState("idle");
+
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+
+  const disabled = addRequestStatus === "pending";
+
+  const onFinish = async (values: any) => {
+    try {
+      setAddRequestStatus("pending");
+      const resultAction = await dispatch(
+        login({ email: values.username, password: values.password })
+      );
+      unwrapResult(resultAction);
+      history.push(`/users`);
+    } catch (err) {
+      console.log(err);
+    } finally {
+      setAddRequestStatus("idle");
+    }
   };
 
   return (
@@ -50,6 +76,7 @@ const Login = () => {
             type="primary"
             htmlType="submit"
             className="login-form-button"
+            disabled={disabled}
           >
             Login
           </Button>

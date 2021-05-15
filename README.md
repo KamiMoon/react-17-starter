@@ -79,6 +79,7 @@ Will automatically deploy via merges into relevant branches using Code Pipeline.
 
 - Auth
 - Lazy loading
+- Real Backend
 
 ## Bugs
 

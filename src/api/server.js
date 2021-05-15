@@ -73,6 +73,14 @@ new Server({
 
     const server = this;
 
+    this.post("/login", function (schema, req) {
+      const result = {
+        token: "abcd",
+        roles: [],
+      };
+      return result;
+    });
+
     this.post("/posts", function (schema, req) {
       const data = this.normalizedRequestAttrs();
       data.date = new Date().toISOString();
