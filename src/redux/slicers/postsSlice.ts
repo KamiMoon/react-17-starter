@@ -54,18 +54,26 @@ export const fetchPostsByUserId = createAsyncThunk(
   }
 );
 
+export const removePost = createAsyncThunk(
+  "posts/removePost",
+  async (payload: { id: string }) => {
+    const response = await client.delete(`/fakeApi/posts/${payload.id}`);
+    return response.data.id;
+  }
+);
+
 const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    postUpdated(state, action) {
-      const { id, title, content } = action.payload;
-      const existingPost = state.entities[id];
-      if (existingPost) {
-        existingPost.title = title;
-        existingPost.content = content;
-      }
-    },
+    // postUpdated(state, action) {
+    //   const { id, title, content } = action.payload;
+    //   const existingPost = state.entities[id];
+    //   if (existingPost) {
+    //     existingPost.title = title;
+    //     existingPost.content = content;
+    //   }
+    // },
     reactionAdded(state, action) {
       const { postId, reaction } = action.payload;
       const existingPost = state.entities[postId];
@@ -93,10 +101,11 @@ const postsSlice = createSlice({
     builder.addCase(addNewPost.fulfilled, postsAdapter.addOne);
     builder.addCase(fetchPostsByUserId.fulfilled, postsAdapter.upsertMany);
     builder.addCase(fetchPost.fulfilled, postsAdapter.upsertOne);
+    builder.addCase(removePost.fulfilled, postsAdapter.removeOne);
   },
 });
 
-export const { postUpdated, reactionAdded } = postsSlice.actions;
+export const { reactionAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;
 

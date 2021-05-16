@@ -35,6 +35,14 @@ export const UserPage = ({ match }: Match) => {
     </li>
   ));
 
+  if (!user) {
+    return (
+      <section>
+        <h2>User not found!</h2>
+      </section>
+    );
+  }
+
   return (
     <section>
       <h2>{user?.firstName}</h2>

@@ -1,11 +1,17 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { PostAuthor } from "./PostAuthor";
 import { TimeAgo } from "./TimeAgo";
 import { ReactionButtons } from "./ReactionButtons";
 
-import { selectPostById, fetchPost } from "redux/slicers/postsSlice";
+import {
+  selectPostById,
+  fetchPost,
+  removePost,
+} from "redux/slicers/postsSlice";
+import { Space, Button } from "antd";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 interface Match {
   match: {
@@ -13,15 +19,30 @@ interface Match {
   };
 }
 export const SinglePostPage = ({ match }: Match) => {
-  const { postId } = match.params;
-
   const dispatch = useAppDispatch();
+  const history = useHistory();
+
+  const { postId } = match.params;
 
   const post = useAppSelector((state) => selectPostById(state, postId));
 
   useEffect(() => {
     dispatch(fetchPost({ id: postId }));
   }, [dispatch, postId]);
+
+  const doDelete = async () => {
+    if (postId) {
+      try {
+        const id = postId;
+
+        const removeAction = await dispatch(removePost({ id: id }));
+        unwrapResult(removeAction);
+        history.push("/posts");
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
 
   if (!post) {
     return (
@@ -39,9 +60,10 @@ export const SinglePostPage = ({ match }: Match) => {
         <PostAuthor userId={post.user} />
         <TimeAgo timestamp={post.date} />
         <ReactionButtons post={post} />
-        <Link to={`/posts/edit/${post.id}`} className="button">
-          Edit Post
-        </Link>
+        <Space>
+          <Link to={`/posts/edit/${post.id}`}>Edit Post</Link>
+          <Button onClick={doDelete}>Delete Post</Button>
+        </Space>
       </article>
     </section>
   );

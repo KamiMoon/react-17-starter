@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { useHistory } from "react-router-dom";
 import {
-  postUpdated,
   selectPostById,
   fetchPost,
   updatePost,

@@ -52,15 +52,32 @@ export function addPost(post: Post): Post {
   return newPost;
 }
 
-export function updatePost(id: string, updateData: Post): Post {
+export function updatePost(id: string, updateData: Post): Post | undefined {
   let i = 0;
+  let postToUpdate;
 
   for (; i < posts.length; i++) {
     if (posts[i].id === id) {
+      postToUpdate = posts[i];
       posts[i] = { ...posts[i], ...updateData };
       break;
     }
   }
 
-  return posts[i];
+  return postToUpdate;
+}
+
+export function removePost(id: string): Post | undefined {
+  let i = 0;
+  let postToRemove;
+
+  for (; i < posts.length; i++) {
+    if (posts[i].id === id) {
+      postToRemove = posts[i];
+      posts.splice(i, 1);
+      break;
+    }
+  }
+
+  return postToRemove;
 }

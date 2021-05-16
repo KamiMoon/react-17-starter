@@ -1,6 +1,6 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-import { posts, addPost, updatePost } from "mocks/data/mock-posts";
+import { posts, addPost, updatePost, removePost } from "mocks/data/mock-posts";
 import { users } from "mocks/data/mock-users";
 import { Post } from "models/Post";
 
@@ -33,8 +33,10 @@ export const handlers = [
     console.log("fake api get user");
 
     const user = users.find((i) => i.id === req.params.id);
-
-    return res(ctx.status(200), ctx.json(user));
+    if (user) {
+      return res(ctx.status(200), ctx.json(user));
+    }
+    return res(ctx.status(404));
   }),
 
   //notifications
@@ -52,7 +54,10 @@ export const handlers = [
   rest.get("/fakeApi/posts/:id", (req, res, ctx) => {
     const post = posts.find((i) => i.id === req.params.id);
 
-    return res(ctx.status(200), ctx.json(post));
+    if (post) {
+      return res(ctx.status(200), ctx.json(post));
+    }
+    return res(ctx.status(404));
   }),
 
   rest.get("/fakeApi/postsByUser/:userId", (req, res, ctx) => {
@@ -75,6 +80,19 @@ export const handlers = [
     const id = req.params.id;
     const updatedPost = updatePost(id, post);
 
-    return res(ctx.status(200), ctx.json(updatedPost));
+    if (updatedPost) {
+      return res(ctx.status(200), ctx.json(updatedPost));
+    }
+    return res(ctx.status(404));
+  }),
+
+  rest.delete("/fakeApi/posts/:id", (req, res, ctx) => {
+    const id = req.params.id;
+    const removedPost = removePost(id);
+
+    if (removedPost) {
+      return res(ctx.status(200), ctx.json(removedPost));
+    }
+    return res(ctx.status(404));
   }),
 ];
