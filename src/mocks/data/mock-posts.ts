@@ -31,3 +31,23 @@ export const post2: Post = {
 };
 
 export const posts: Array<Post> = [post1, post2];
+
+export function addPost(post: Post): Post {
+  const id = (posts.length + 1).toString();
+
+  const newPost = {
+    ...post,
+    id,
+    date: new Date().toISOString(),
+    reactions: {
+      thumbsUp: 0,
+      hooray: 0,
+      heart: 0,
+      rocket: 0,
+      eyes: 0,
+    },
+  };
+
+  posts.push(newPost);
+  return newPost;
+}

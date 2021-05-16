@@ -9,7 +9,6 @@ import {
   allNotificationsRead,
 } from "redux/slicers/notificationSlice";
 import { User } from "models/User";
-//import classnames from 'classnames'
 
 export const NotificationsList = () => {
   const dispatch = useAppDispatch();

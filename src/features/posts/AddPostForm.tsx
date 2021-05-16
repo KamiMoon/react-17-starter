@@ -1,12 +1,11 @@
-import React, { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useHistory } from "react-router-dom";
-
 import { addNewPost } from "redux/slicers/postsSlice";
-import { selectAllUsers } from "redux/slicers/usersSlice";
-
+import { fetchUsers, selectAllUsers } from "redux/slicers/usersSlice";
 import { Form, Input, Button, Select } from "antd";
+
 const { Option } = Select;
 
 const layout = {
@@ -18,12 +17,14 @@ const tailLayout = {
 };
 
 export const AddPostForm = () => {
-  const [addRequestStatus, setAddRequestStatus] = useState("idle");
-
   const dispatch = useAppDispatch();
   const history = useHistory();
-
+  const [addRequestStatus, setAddRequestStatus] = useState("idle");
   const users = useAppSelector(selectAllUsers);
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
   const canSave = addRequestStatus === "idle";
 
@@ -44,12 +45,11 @@ export const AddPostForm = () => {
         );
         //required for normal try/catch logic to get the error
         unwrapResult(resultAction);
-
+        setAddRequestStatus("idle");
         history.push(`/`);
       } catch (err) {
-        console.error("Failed to save the post: ", err);
-      } finally {
         setAddRequestStatus("idle");
+        console.error("Failed to save the post: ", err);
       }
     }
   };

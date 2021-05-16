@@ -1,7 +1,8 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-import { posts } from "mocks/data/mock-posts";
+import { posts, addPost } from "mocks/data/mock-posts";
 import { users } from "mocks/data/mock-users";
+import { Post } from "models/Post";
 
 export const handlers = [
   rest.post("/fakeApi/login", (req, res, ctx) => {
@@ -58,9 +59,9 @@ export const handlers = [
   }),
 
   rest.post("/fakeApi/posts", (req, res, ctx) => {
-    console.log(req);
-    console.log("fake api create post called");
+    const post = req.body as Post;
+    const addedPost = addPost(post);
 
-    return res(ctx.status(200), ctx.json(posts[0]));
+    return res(ctx.status(200), ctx.json(addedPost));
   }),
 ];
