@@ -51,3 +51,16 @@ export function addPost(post: Post): Post {
   posts.push(newPost);
   return newPost;
 }
+
+export function updatePost(id: string, updateData: Post): Post {
+  let i = 0;
+
+  for (; i < posts.length; i++) {
+    if (posts[i].id === id) {
+      posts[i] = { ...posts[i], ...updateData };
+      break;
+    }
+  }
+
+  return posts[i];
+}

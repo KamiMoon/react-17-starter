@@ -1,10 +1,11 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-import { posts, addPost } from "mocks/data/mock-posts";
+import { posts, addPost, updatePost } from "mocks/data/mock-posts";
 import { users } from "mocks/data/mock-users";
 import { Post } from "models/Post";
 
 export const handlers = [
+  //login
   rest.post("/fakeApi/login", (req, res, ctx) => {
     console.log("fake api login called");
 
@@ -21,6 +22,8 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(result));
   }),
 
+  //users
+
   rest.get("/fakeApi/users", (req, res, ctx) => {
     console.log("fake api users called");
     return res(ctx.status(200), ctx.json(users));
@@ -34,11 +37,13 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(user));
   }),
 
+  //notifications
   rest.post("/fakeApi/notifications", (req, res, ctx) => {
     console.log("fake api notifications called");
     return res(ctx.status(200), ctx.json([]));
   }),
 
+  //posts
   rest.get("/fakeApi/posts", (req, res, ctx) => {
     console.log("fake api login called");
     return res(ctx.status(200), ctx.json(posts));
@@ -63,5 +68,13 @@ export const handlers = [
     const addedPost = addPost(post);
 
     return res(ctx.status(200), ctx.json(addedPost));
+  }),
+
+  rest.put("/fakeApi/posts/:id", (req, res, ctx) => {
+    const post = req.body as Post;
+    const id = req.params.id;
+    const updatedPost = updatePost(id, post);
+
+    return res(ctx.status(200), ctx.json(updatedPost));
   }),
 ];

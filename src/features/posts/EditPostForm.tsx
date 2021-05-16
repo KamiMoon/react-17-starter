@@ -1,14 +1,14 @@
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { useHistory } from "react-router-dom";
-
 import {
   postUpdated,
   selectPostById,
   fetchPost,
+  updatePost,
 } from "redux/slicers/postsSlice";
-
 import { Form, Input, Button } from "antd";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 const layout = {
   labelCol: { span: 2 },
@@ -25,24 +25,34 @@ interface Match {
 }
 
 export const EditPostForm = ({ match }: Match) => {
+  const dispatch = useAppDispatch();
+  const history = useHistory();
+
   const { postId } = match.params;
 
   const post = useAppSelector((state) => selectPostById(state, postId));
-
-  const dispatch = useAppDispatch();
-  const history = useHistory();
 
   useEffect(() => {
     dispatch(fetchPost({ id: postId }));
   }, [dispatch, postId]);
 
-  const onSavePostClicked = (values: { title: string; content: string }) => {
+  const onSavePostClicked = async (values: {
+    title: string;
+    content: string;
+  }) => {
     if (values.title && values.content) {
-      const title = values.title;
-      const content = values.content;
+      try {
+        const title = values.title;
+        const content = values.content;
 
-      dispatch(postUpdated({ id: postId, title, content }));
-      history.push(`/posts/view/${postId}`);
+        const updateAction = await dispatch(
+          updatePost({ id: postId, title, content })
+        );
+        unwrapResult(updateAction);
+        history.push(`/posts/view/${postId}`);
+      } catch (err) {
+        console.error("Failed to save the post: ", err);
+      }
     }
   };
 

@@ -32,22 +32,16 @@ export const fetchPost = createAsyncThunk(
 
 export const addNewPost = createAsyncThunk(
   "posts/addNewPost",
-  // The payload creator receives the partial `{title, content, user}` object
   async (post: { title: string; content: string; user: string }) => {
-    // We send the initial data to the fake API server
     const response = await client.post("/fakeApi/posts", post);
-    // The response includes the complete post object, including unique ID
     return response.data;
   }
 );
 
 export const updatePost = createAsyncThunk(
   "posts/updatePost",
-  // The payload creator receives the partial `{title, content, user}` object
-  async (initialPost) => {
-    // We send the initial data to the fake API server
-    const response = await client.post("/fakeApi/posts", { post: initialPost });
-    // The response includes the complete post object, including unique ID
+  async (post: { id: string; title: string; content: string }) => {
+    const response = await client.put(`/fakeApi/posts/${post.id}`, post);
     return response.data;
   }
 );
