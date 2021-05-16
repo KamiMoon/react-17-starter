@@ -1,7 +1,7 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-import { posts } from "./data/mock-posts";
-import { users } from "./data/mock-users";
+import { posts } from "mocks/data/mock-posts";
+import { users } from "mocks/data/mock-users";
 
 export const handlers = [
   rest.post("/fakeApi/login", (req, res, ctx) => {

@@ -3,9 +3,9 @@ import {
   createAsyncThunk,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
-import { client } from "../../api/client";
-import { User } from "../../models/User";
-import type { RootState } from "../store";
+import { client } from "api/client";
+import { User } from "models/User";
+import type { RootState } from "redux/store";
 
 const usersAdapter = createEntityAdapter<User>();
 

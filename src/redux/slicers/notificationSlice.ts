@@ -4,9 +4,9 @@ import {
   createEntityAdapter,
   PayloadAction,
 } from "@reduxjs/toolkit";
-import type { RootState } from "../store";
-import { client } from "../../api/client";
-import { Notification } from "../../models/Notification";
+import type { RootState } from "redux/store";
+import { client } from "api/client";
+import { Notification } from "models/Notification";
 
 export const fetchNotifications = createAsyncThunk(
   "notifications/fetchNotifications",

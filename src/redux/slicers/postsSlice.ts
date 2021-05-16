@@ -4,9 +4,9 @@ import {
   createSelector,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
-import { client } from "../../api/client";
-import { Post } from "../../models/Post";
-import type { RootState } from "../store";
+import { client } from "api/client";
+import { Post } from "models/Post";
+import type { RootState } from "redux/store";
 
 const postsAdapter = createEntityAdapter<Post>({
   sortComparer: (a, b) => b.date.localeCompare(a.date),
