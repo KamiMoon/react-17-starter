@@ -28,7 +28,7 @@ export const EditPostForm = ({ match }: any) => {
 
   useEffect(() => {
     dispatch(fetchPost({ id: postId }));
-  }, []);
+  }, [dispatch, postId]);
 
   const onSavePostClicked = (values: any) => {
     if (values.title && values.content) {

@@ -7,9 +7,7 @@ export const login = createAsyncThunk(
     let response;
     try {
       response = await client.post("/fakeApi/login", { post: payload });
-      console.log(response);
-
-      return response;
+      return response.data;
     } catch (e) {
       console.log(e);
       return thunkApi.rejectWithValue(e);

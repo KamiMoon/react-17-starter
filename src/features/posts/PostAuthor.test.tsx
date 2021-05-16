@@ -1,10 +1,6 @@
 import { PostAuthor } from "./PostAuthor";
 import { render, screen } from "../../test-utils";
-
-const user = {
-  id: "1",
-  name: "Eric",
-};
+import { user1 } from "../../mocks/data/mock-users";
 
 test("renders", () => {
   render(<PostAuthor userId={"1"} />, {
@@ -12,7 +8,7 @@ test("renders", () => {
       users: {
         ids: ["1"],
         entities: {
-          "1": user,
+          "1": user1,
         },
       },
     },

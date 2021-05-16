@@ -1,64 +1,42 @@
 import {
   createSlice,
-  nanoid,
   createAsyncThunk,
   createSelector,
   createEntityAdapter,
 } from "@reduxjs/toolkit";
 import { client } from "../../api/client";
-import type { RootState } from "../store";
+import { Post } from "../../models/Post";
 
-interface Post {
-  id: string;
-  date: string;
-  title: string;
-  content: string;
-  user: string;
-  reactions: any;
-}
-
-interface PostState {
-  posts: Post[];
-  status: string;
-  error?: any;
-}
-
-// const initialState: PostState = {
-//   posts: [],
-//   status: "idle",
-//   error: null,
-// };
-
-const postsAdapter = createEntityAdapter({
+const postsAdapter = createEntityAdapter<Post>({
   sortComparer: (a: any, b: any) => b.date.localeCompare(a.date),
 });
 
 const initialState = postsAdapter.getInitialState({
   status: "idle",
-  error: null,
+  error: "",
 });
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
   const response = await client.get("/fakeApi/posts");
-  return response;
+  return response.data;
 });
 
 export const fetchPost = createAsyncThunk(
   "posts/fetchPost",
   async (payload: { id: string }) => {
     const response = await client.get(`/fakeApi/posts/${payload.id}`);
-    return response;
+    return response.data;
   }
 );
 
 export const addNewPost = createAsyncThunk(
   "posts/addNewPost",
   // The payload creator receives the partial `{title, content, user}` object
-  async (initialPost) => {
+  async (initialPost: { title: string; content: string; user: string }) => {
     // We send the initial data to the fake API server
     const response = await client.post("/fakeApi/posts", { post: initialPost });
     // The response includes the complete post object, including unique ID
-    return response.post;
+    return response.data;
   }
 );
 
@@ -69,7 +47,7 @@ export const updatePost = createAsyncThunk(
     // We send the initial data to the fake API server
     const response = await client.post("/fakeApi/posts", { post: initialPost });
     // The response includes the complete post object, including unique ID
-    return response.post;
+    return response.data;
   }
 );
 
@@ -77,7 +55,7 @@ export const fetchPostsByUserId = createAsyncThunk(
   "posts/fetchPostsByUser",
   async (payload: { id: string }) => {
     const response = await client.get(`/fakeApi/postsByUser/${payload.id}`);
-    return response;
+    return response.data;
   }
 );
 
@@ -121,8 +99,9 @@ const postsSlice = createSlice({
       const { postId, reaction } = action.payload;
       //const existingPost = state.posts.find((post) => post.id === postId);
       const existingPost = state.entities[postId];
-      if (existingPost) {
-        existingPost.reactions[reaction]++;
+      if (existingPost && existingPost.reactions && reaction) {
+        let foundReaction: any = existingPost.reactions;
+        foundReaction[reaction]++;
       }
     },
   },
@@ -138,7 +117,9 @@ const postsSlice = createSlice({
     });
     builder.addCase(fetchPosts.rejected, (state, action) => {
       state.status = "failed";
-      state.error = action.error.message;
+      if (action.error.message) {
+        state.error = action.error.message;
+      }
     });
 
     // builder.addCase(addNewPost.fulfilled, (state, action) => {

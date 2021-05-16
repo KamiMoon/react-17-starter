@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useHistory } from "react-router-dom";
 
@@ -20,10 +20,10 @@ const tailLayout = {
 export const AddPostForm = () => {
   const [addRequestStatus, setAddRequestStatus] = useState("idle");
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
 
-  const users = useSelector(selectAllUsers);
+  const users = useAppSelector(selectAllUsers);
 
   const canSave = addRequestStatus === "idle";
 

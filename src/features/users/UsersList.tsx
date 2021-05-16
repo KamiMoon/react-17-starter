@@ -38,7 +38,7 @@ export const UsersList = () => {
 
   useEffect(() => {
     dispatch(fetchUsers());
-  }, []);
+  }, [dispatch]);
 
   const users: Array<User> = useAppSelector<Array<User>>(selectAllUsers);
 

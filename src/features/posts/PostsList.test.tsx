@@ -1,20 +1,6 @@
 import { PostsList } from "./PostsList";
 import { render, screen } from "../../test-utils";
-
-const post = {
-  id: "1",
-  date: new Date().toISOString(),
-  title: "My Title",
-  content: "My content",
-  user: 1,
-  reactions: {
-    thumbsUp: 0,
-    hooray: 0,
-    heart: 0,
-    rocket: 0,
-    eyes: 0,
-  },
-};
+import { post1 } from "../../mocks/data/mock-posts";
 
 test("renders with no posts", () => {
   render(<PostsList />, {
@@ -44,7 +30,7 @@ test("renders - succeeded", () => {
       posts: {
         ids: ["1"],
         entities: {
-          "1": post,
+          "1": post1,
         },
         status: "succeeded",
       },

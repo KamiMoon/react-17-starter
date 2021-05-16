@@ -10,18 +10,16 @@ const usersAdapter = createEntityAdapter<User>();
 
 const initialState = usersAdapter.getInitialState();
 
-//const initialState: any[] = [];
-
 export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   const response = await client.get("/fakeApi/users");
-  return response as Array<User>;
+  return response.data as Array<User>;
 });
 
 export const fetchUser = createAsyncThunk(
   "users/fetchUser",
   async (payload: { id: string }) => {
     const response = await client.get(`/fakeApi/user/${payload.id}`);
-    return response as User;
+    return response.data as User;
   }
 );
 

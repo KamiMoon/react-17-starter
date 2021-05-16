@@ -8,7 +8,7 @@ import {
   fetchPostsByUserId,
 } from "../../redux/slicers/postsSlice";
 
-export const UserPage = ({ match }) => {
+export const UserPage = ({ match }: any) => {
   const { userId } = match.params;
 
   const dispatch = useAppDispatch();
@@ -21,7 +21,7 @@ export const UserPage = ({ match }) => {
   useEffect(() => {
     dispatch(fetchUser({ id: userId }));
     dispatch(fetchPostsByUserId({ id: userId }));
-  }, []);
+  }, [dispatch, userId]);
 
   const postTitles = postsForUser.map((post) => (
     <li key={post.id}>

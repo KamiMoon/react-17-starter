@@ -1,10 +1,6 @@
 import { NotificationsList } from "./NotificationList";
 import { render, screen } from "../../test-utils";
-
-const user = {
-  id: "1",
-  name: "Eric",
-};
+import { user1 } from "../../mocks/data/mock-users";
 
 const notification = {
   id: "1",
@@ -23,7 +19,7 @@ const initialState = {
   users: {
     ids: ["1"],
     entities: {
-      "1": user,
+      "1": user1,
     },
   },
 };

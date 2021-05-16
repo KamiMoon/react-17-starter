@@ -1,5 +1,6 @@
 import { SinglePostPage } from "./SinglePagePost";
 import { render, screen } from "../../test-utils";
+import { post1 } from "../../mocks/data/mock-posts";
 
 test("renders - no post", () => {
   render(<SinglePostPage match={{ params: { postId: "1" } }} />, {
@@ -14,20 +15,7 @@ test("renders - with post", () => {
     initialState: {
       posts: {
         entities: {
-          "1": {
-            id: "1",
-            date: new Date().toISOString(),
-            title: "My Title",
-            content: "My content",
-            user: 1,
-            reactions: {
-              thumbsUp: 0,
-              hooray: 0,
-              heart: 0,
-              rocket: 0,
-              eyes: 0,
-            },
-          },
+          "1": post1,
         },
       },
     },

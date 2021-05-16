@@ -16,7 +16,7 @@ export const SinglePostPage = ({ match }: any) => {
 
   useEffect(() => {
     dispatch(fetchPost({ id: postId }));
-  }, []);
+  }, [dispatch, postId]);
 
   if (!post) {
     return (

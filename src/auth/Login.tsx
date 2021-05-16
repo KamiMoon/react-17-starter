@@ -6,7 +6,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 
 import { login } from "../redux/slicers/authSlice";
 
-import { Form, Input, Button, Checkbox } from "antd";
+import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import "./Login.css";
 
