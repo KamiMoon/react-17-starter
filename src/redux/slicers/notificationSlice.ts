@@ -2,15 +2,16 @@ import {
   createSlice,
   createAsyncThunk,
   createEntityAdapter,
+  PayloadAction,
 } from "@reduxjs/toolkit";
-
+import type { RootState } from "../store";
 import { client } from "../../api/client";
 import { Notification } from "../../models/Notification";
 
 export const fetchNotifications = createAsyncThunk(
   "notifications/fetchNotifications",
   async (_, { getState }) => {
-    const allNotifications = selectAllNotifications(getState());
+    const allNotifications = selectAllNotifications(getState() as RootState);
     const [latestNotification] = allNotifications;
     const latestTimestamp = latestNotification ? latestNotification.date : "";
     const response = await client.get(
@@ -21,7 +22,7 @@ export const fetchNotifications = createAsyncThunk(
 );
 
 const notificationsAdapter = createEntityAdapter<Notification>({
-  sortComparer: (a: any, b: any) => b.date.localeCompare(a.date),
+  sortComparer: (a, b) => b.date.localeCompare(a.date),
 });
 
 const notificationsSlice = createSlice({
@@ -29,9 +30,6 @@ const notificationsSlice = createSlice({
   initialState: notificationsAdapter.getInitialState(),
   reducers: {
     allNotificationsRead(state, action) {
-      // state.forEach((notification: any) => {
-      //   notification.read = true;
-      // });
       Object.values(state.entities).forEach((notification) => {
         if (notification) {
           notification.read = true;
@@ -40,22 +38,18 @@ const notificationsSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(fetchNotifications.fulfilled, (state, action: any) => {
-      // state.forEach((notification: any) => {
-      //   // Any notifications we've read are no longer new
-      //   notification.isNew = !notification.read;
-      // });
-      // state.push(...action.payload);
-      // // Sort with newest first
-      // state.sort((a: any, b: any) => b.date.localeCompare(a.date));
-      Object.values(state.entities).forEach((notification) => {
-        if (notification) {
-          // Any notifications we've read are no longer new
-          notification.isNew = !notification.read;
-        }
-      });
-      notificationsAdapter.upsertMany(state, action.payload);
-    });
+    builder.addCase(
+      fetchNotifications.fulfilled,
+      (state, action: PayloadAction<Array<Notification>>) => {
+        Object.values(state.entities).forEach((notification) => {
+          if (notification) {
+            // Any notifications we've read are no longer new
+            notification.isNew = !notification.read;
+          }
+        });
+        notificationsAdapter.upsertMany(state, action.payload);
+      }
+    );
   },
 });
 
@@ -65,6 +59,6 @@ export default notificationsSlice.reducer;
 
 export const {
   selectAll: selectAllNotifications,
-} = notificationsAdapter.getSelectors((state: any) => state.notifications);
-
-//export const selectAllNotifications = (state: any) => state.notifications;
+} = notificationsAdapter.getSelectors(
+  (state: RootState) => state.notifications
+);

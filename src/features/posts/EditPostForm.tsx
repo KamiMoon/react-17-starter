@@ -18,10 +18,16 @@ const tailLayout = {
   wrapperCol: { offset: 2, span: 22 },
 };
 
-export const EditPostForm = ({ match }: any) => {
+interface Match {
+  match: {
+    params: { postId: string };
+  };
+}
+
+export const EditPostForm = ({ match }: Match) => {
   const { postId } = match.params;
 
-  const post = useAppSelector((state: any) => selectPostById(state, postId));
+  const post = useAppSelector((state) => selectPostById(state, postId));
 
   const dispatch = useAppDispatch();
   const history = useHistory();

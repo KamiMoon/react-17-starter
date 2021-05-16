@@ -1,5 +1,6 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { Post } from "../../models/Post";
 
 import { reactionAdded } from "../../redux/slicers/postsSlice";
 
@@ -11,10 +12,11 @@ const reactionEmoji = {
   eyes: "👀",
 };
 
-export const ReactionButtons = ({ post }: any) => {
+export const ReactionButtons = ({ post }: { post: Post }) => {
   const dispatch = useDispatch();
 
   const reactionButtons = Object.entries(reactionEmoji).map(([name, emoji]) => {
+    let reactions: any = post.reactions;
     return (
       <button
         key={name}
@@ -24,7 +26,7 @@ export const ReactionButtons = ({ post }: any) => {
           dispatch(reactionAdded({ postId: post.id, reaction: name }))
         }
       >
-        {emoji} {post.reactions[name]}
+        {emoji} {reactions[name]}
       </button>
     );
   });

@@ -20,7 +20,7 @@ export const NotificationsList = () => {
     dispatch(allNotificationsRead(null));
   }, [dispatch]);
 
-  const renderedNotifications = notifications.map((notification: any) => {
+  const renderedNotifications = notifications.map((notification) => {
     const date = parseISO(notification.date);
     const timeAgo = formatDistanceToNow(date);
     const user = users.find((user: User) => user.id === notification.user) || {

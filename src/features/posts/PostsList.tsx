@@ -1,17 +1,17 @@
 import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
 import { PostExcerpt } from "./PostExcerpt";
 
 import { fetchPosts, selectPostIds } from "../../redux/slicers/postsSlice";
 
 export const PostsList = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   //const posts = useSelector(selectAllPosts);
-  const orderedPostIds = useSelector(selectPostIds);
+  const orderedPostIds = useAppSelector(selectPostIds);
 
-  const postStatus = useSelector((state: any) => state.posts.status);
-  const error = useSelector((state: any) => state.posts.error);
+  const postStatus = useAppSelector((state) => state.posts.status);
+  const error = useAppSelector((state) => state.posts.error);
 
   useEffect(() => {
     if (postStatus === "idle") {
@@ -23,8 +23,8 @@ export const PostsList = () => {
   // const orderedPosts = posts
   //   .slice()
   //   .sort((a, b) => b.date.localeCompare(a.date));
-  const renderedPosts = orderedPostIds.map((postId: any) => (
-    <PostExcerpt key={postId} postId={postId} />
+  const renderedPosts = orderedPostIds.map((postId) => (
+    <PostExcerpt key={postId} postId={postId.toString()} />
   ));
 
   let content;

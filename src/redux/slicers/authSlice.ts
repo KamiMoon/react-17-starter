@@ -15,13 +15,18 @@ export const login = createAsyncThunk(
   }
 );
 
+interface Role {
+  name: string;
+  isActive: boolean;
+}
+
 interface AuthState {
   isAuthenticated: boolean;
   token: string;
-  roles: any[];
+  roles: Role[];
   hasRequiredPrivileges: boolean;
   status?: string;
-  error?: any;
+  error?: string;
 }
 
 const initialState: AuthState = {
@@ -30,12 +35,10 @@ const initialState: AuthState = {
   roles: [],
   hasRequiredPrivileges: false,
   status: "idle",
-  error: null,
+  error: "",
 };
 
-function hasRequiredPrivileges(
-  roles: Array<{ name: string; isActive: boolean }>
-) {
+function hasRequiredPrivileges(roles: Role[]) {
   if (roles) {
     const foundRoles = roles.filter((f) => {
       return f.name === "Admin" && f.isActive === true;

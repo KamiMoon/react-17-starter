@@ -7,12 +7,17 @@ import { ReactionButtons } from "./ReactionButtons";
 
 import { selectPostById, fetchPost } from "../../redux/slicers/postsSlice";
 
-export const SinglePostPage = ({ match }: any) => {
+interface Match {
+  match: {
+    params: { postId: string };
+  };
+}
+export const SinglePostPage = ({ match }: Match) => {
   const { postId } = match.params;
 
   const dispatch = useAppDispatch();
 
-  const post = useAppSelector((state: any) => selectPostById(state, postId));
+  const post = useAppSelector((state) => selectPostById(state, postId));
 
   useEffect(() => {
     dispatch(fetchPost({ id: postId }));

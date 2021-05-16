@@ -27,7 +27,7 @@ const columns = [
     title: "Email",
     dataIndex: "email",
     key: "email",
-    render: (text: string, record: any) => {
+    render: (text: string, record: User) => {
       return <Link to={`/users/${record.id}`}>{record.email}</Link>;
     },
   },

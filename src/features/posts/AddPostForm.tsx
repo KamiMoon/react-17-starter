@@ -50,9 +50,9 @@ export const AddPostForm = () => {
     }
   };
 
-  const usersOptions = users.map((user: any) => (
+  const usersOptions = users.map((user) => (
     <Option key={user.id} value={user.id}>
-      {user.name}
+      {user.firstName}
     </Option>
   ));
 

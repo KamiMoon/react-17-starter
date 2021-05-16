@@ -8,13 +8,19 @@ import {
   fetchPostsByUserId,
 } from "../../redux/slicers/postsSlice";
 
-export const UserPage = ({ match }: any) => {
+interface Match {
+  match: {
+    params: { userId: string };
+  };
+}
+
+export const UserPage = ({ match }: Match) => {
   const { userId } = match.params;
 
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => selectUserById(state, userId));
 
-  const postsForUser = useAppSelector((state: any) =>
+  const postsForUser = useAppSelector((state) =>
     selectPostsByUser(state, userId)
   );
 

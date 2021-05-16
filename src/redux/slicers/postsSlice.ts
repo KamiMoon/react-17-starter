@@ -6,9 +6,10 @@ import {
 } from "@reduxjs/toolkit";
 import { client } from "../../api/client";
 import { Post } from "../../models/Post";
+import type { RootState } from "../store";
 
 const postsAdapter = createEntityAdapter<Post>({
-  sortComparer: (a: any, b: any) => b.date.localeCompare(a.date),
+  sortComparer: (a, b) => b.date.localeCompare(a.date),
 });
 
 const initialState = postsAdapter.getInitialState({
@@ -63,32 +64,8 @@ const postsSlice = createSlice({
   name: "posts",
   initialState,
   reducers: {
-    // postAdded: {
-    //   reducer(state, action) {
-    //     state.posts.push(action.payload);
-    //   },
-    //   prepare(title, content, userId) {
-    //     return {
-    //       payload: {
-    //         id: nanoid(),
-    //         date: new Date().toISOString(),
-    //         title,
-    //         content,
-    //         user: userId,
-    //         reactions: {
-    //           thumbsUp: 0,
-    //           hooray: 0,
-    //           heart: 0,
-    //           rocket: 0,
-    //           eyes: 0,
-    //         },
-    //       },
-    //     } as any;
-    //   },
-    // },
     postUpdated(state, action) {
       const { id, title, content } = action.payload;
-      //const existingPost = state.posts.find((post) => post.id === id);
       const existingPost = state.entities[id];
       if (existingPost) {
         existingPost.title = title;
@@ -97,7 +74,6 @@ const postsSlice = createSlice({
     },
     reactionAdded(state, action) {
       const { postId, reaction } = action.payload;
-      //const existingPost = state.posts.find((post) => post.id === postId);
       const existingPost = state.entities[postId];
       if (existingPost && existingPost.reactions && reaction) {
         let foundReaction: any = existingPost.reactions;
@@ -111,8 +87,6 @@ const postsSlice = createSlice({
     });
     builder.addCase(fetchPosts.fulfilled, (state, action) => {
       state.status = "succeeded";
-      // Add any fetched posts to the array
-      //state.posts = state.posts.concat(action.payload);
       postsAdapter.upsertMany(state, action.payload);
     });
     builder.addCase(fetchPosts.rejected, (state, action) => {
@@ -121,10 +95,6 @@ const postsSlice = createSlice({
         state.error = action.error.message;
       }
     });
-
-    // builder.addCase(addNewPost.fulfilled, (state, action) => {
-    //   state.posts.push(action.payload);
-    // });
 
     builder.addCase(addNewPost.fulfilled, postsAdapter.addOne);
     builder.addCase(fetchPostsByUserId.fulfilled, postsAdapter.upsertMany);
@@ -142,7 +112,7 @@ export const {
   selectById: selectPostById,
   selectIds: selectPostIds,
   // Pass in a selector that returns the posts slice of state
-} = postsAdapter.getSelectors((state: any) => state.posts);
+} = postsAdapter.getSelectors((state: RootState) => state.posts);
 
 // export const selectAllPosts = (state: RootState) => state.posts.posts;
 
@@ -150,6 +120,6 @@ export const {
 //   state.posts.posts.find((post: Post) => post.id === postId);
 
 export const selectPostsByUser = createSelector(
-  [selectAllPosts, (state: any, userId: any) => userId],
+  [selectAllPosts, (state: RootState, userId: string) => userId],
   (posts, userId) => posts.filter((post) => post.user === userId)
 );
