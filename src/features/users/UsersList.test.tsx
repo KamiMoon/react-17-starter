@@ -1,16 +1,12 @@
 import { UsersList } from "./UsersList";
 import { render, screen } from "../../test-utils";
-
-const user = {
-  id: "1",
-  name: "Eric",
-};
+import { user1 } from "../../mocks/data/mock-users";
 
 const initialState = {
   users: {
     ids: ["1"],
     entities: {
-      "1": user,
+      "1": user1,
     },
   },
 };
@@ -19,6 +15,6 @@ test("renders", () => {
   render(<UsersList />, {
     initialState: initialState,
   });
-  const text = screen.getByText(/Eric/i);
-  expect(text).toBeInTheDocument();
+  const text = screen.getAllByText(/Eric/i);
+  expect(text[0]).toBeInTheDocument();
 });

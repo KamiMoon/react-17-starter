@@ -1,4 +1,6 @@
-export const post1 = {
+import { Post } from "../../models/Post";
+
+export const post1: Post = {
   id: "1",
   date: new Date().toISOString(),
   title: "My Title",
@@ -13,7 +15,7 @@ export const post1 = {
   },
 };
 
-export const post2 = {
+export const post2: Post = {
   id: "2",
   date: new Date().toISOString(),
   title: "My Title 2",
@@ -28,4 +30,4 @@ export const post2 = {
   },
 };
 
-export const posts = [post1, post2];
+export const posts: Array<Post> = [post1, post2];

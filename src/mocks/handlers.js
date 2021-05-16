@@ -22,7 +22,7 @@ export const handlers = [
 
   rest.get("/fakeApi/users", (req, res, ctx) => {
     console.log("fake api users called");
-    return res(ctx.status(200), ctx.json([users]));
+    return res(ctx.status(200), ctx.json(users));
   }),
 
   rest.post("/fakeApi/notifications", (req, res, ctx) => {
@@ -32,13 +32,13 @@ export const handlers = [
 
   rest.get("/fakeApi/posts", (req, res, ctx) => {
     console.log("fake api login called");
-    return res(ctx.status(200), ctx.json([posts]));
+    return res(ctx.status(200), ctx.json(posts));
   }),
 
   rest.post("/fakeApi/posts", (req, res, ctx) => {
     console.log(req);
     console.log("fake api create post called");
 
-    return res(ctx.status(200), ctx.json([posts]));
+    return res(ctx.status(200), ctx.json(posts[0]));
   }),
 ];

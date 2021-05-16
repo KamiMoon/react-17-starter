@@ -1,9 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
-import { selectAllUsers } from "../../redux/slicers/usersSlice";
+import { fetchUsers, selectAllUsers } from "../../redux/slicers/usersSlice";
 
 import { Table } from "antd";
+
+import { User } from "../../models/User";
 
 const columns = [
   {
@@ -12,22 +14,33 @@ const columns = [
     key: "id",
   },
   {
-    title: "Username",
-    dataIndex: "username",
-    key: "username",
+    title: "First Name",
+    dataIndex: "firstName",
+    key: "firstName",
   },
   {
-    title: "Name",
-    dataIndex: "name",
-    key: "name",
+    title: "Last Name",
+    dataIndex: "lastName",
+    key: "lastName",
+  },
+  {
+    title: "Email",
+    dataIndex: "email",
+    key: "email",
     render: (text: string, record: any) => {
-      return <Link to={`/users/${record.id}`}>{record.name}</Link>;
+      return <Link to={`/users/${record.id}`}>{record.email}</Link>;
     },
   },
 ];
 
 export const UsersList = () => {
-  const users: any = useSelector(selectAllUsers);
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchUsers());
+  }, []);
+
+  const users: Array<User> = useAppSelector<Array<User>>(selectAllUsers);
 
   return (
     <section>
