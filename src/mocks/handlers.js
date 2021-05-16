@@ -25,6 +25,16 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(users));
   }),
 
+  rest.get("/fakeApi/user/:id", (req, res, ctx) => {
+    console.log("fake api get user");
+
+    console.log(req.params);
+
+    const user = users.find((i) => i.id === req.params.id);
+
+    return res(ctx.status(200), ctx.json(user));
+  }),
+
   rest.post("/fakeApi/notifications", (req, res, ctx) => {
     console.log("fake api notifications called");
     return res(ctx.status(200), ctx.json([]));

@@ -17,6 +17,14 @@ export const fetchUsers = createAsyncThunk("users/fetchUsers", async () => {
   return response as Array<User>;
 });
 
+export const fetchUser = createAsyncThunk(
+  "users/fetchUser",
+  async (payload: { id: string }) => {
+    const response = await client.get(`/fakeApi/user/${payload.id}`);
+    return response as User;
+  }
+);
+
 const usersSlice = createSlice({
   name: "users",
   initialState,
@@ -27,6 +35,7 @@ const usersSlice = createSlice({
     // });
 
     builder.addCase(fetchUsers.fulfilled, usersAdapter.setAll);
+    builder.addCase(fetchUser.fulfilled, usersAdapter.upsertOne);
   },
 });
 

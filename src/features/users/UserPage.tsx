@@ -1,8 +1,8 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
 
-import { selectUserById } from "../../redux/slicers/usersSlice";
+import { selectUserById, fetchUser } from "../../redux/slicers/usersSlice";
 import {
   selectAllPosts,
   selectPostsByUser,
@@ -11,11 +11,16 @@ import {
 export const UserPage = ({ match }) => {
   const { userId } = match.params;
 
-  const user = useSelector((state) => selectUserById(state, userId));
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => selectUserById(state, userId));
 
-  const postsForUser = useSelector((state: any) =>
+  const postsForUser = useAppSelector((state: any) =>
     selectPostsByUser(state, userId)
   );
+
+  useEffect(() => {
+    dispatch(fetchUser({ id: userId }));
+  }, []);
 
   const postTitles = postsForUser.map((post) => (
     <li key={post.id}>
