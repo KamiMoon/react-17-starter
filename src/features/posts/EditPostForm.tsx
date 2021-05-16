@@ -1,7 +1,12 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { useHistory } from "react-router-dom";
 
-import { postUpdated, selectPostById } from "../../redux/slicers/postsSlice";
+import {
+  postUpdated,
+  selectPostById,
+  fetchPost,
+} from "../../redux/slicers/postsSlice";
 
 import { Form, Input, Button } from "antd";
 
@@ -16,10 +21,14 @@ const tailLayout = {
 export const EditPostForm = ({ match }: any) => {
   const { postId } = match.params;
 
-  const post = useSelector((state: any) => selectPostById(state, postId));
+  const post = useAppSelector((state: any) => selectPostById(state, postId));
 
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const history = useHistory();
+
+  useEffect(() => {
+    dispatch(fetchPost({ id: postId }));
+  }, []);
 
   const onSavePostClicked = (values: any) => {
     if (values.title && values.content) {
@@ -39,38 +48,40 @@ export const EditPostForm = ({ match }: any) => {
     <section>
       <h2>Edit Post</h2>
 
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{
-          title: post.title,
-          content: post.content,
-          remember: true,
-        }}
-        onFinish={onSavePostClicked}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          label="Post Title"
-          name="title"
-          rules={[{ required: true, message: "Please input your title!" }]}
+      {post && (
+        <Form
+          {...layout}
+          name="basic"
+          initialValues={{
+            title: post.title,
+            content: post.content,
+            remember: true,
+          }}
+          onFinish={onSavePostClicked}
+          onFinishFailed={onFinishFailed}
         >
-          <Input />
-        </Form.Item>
-        <Form.Item
-          label="Content"
-          name="content"
-          rules={[{ required: true, message: "Please input your content!" }]}
-        >
-          <Input.TextArea rows={6} />
-        </Form.Item>
+          <Form.Item
+            label="Post Title"
+            name="title"
+            rules={[{ required: true, message: "Please input your title!" }]}
+          >
+            <Input />
+          </Form.Item>
+          <Form.Item
+            label="Content"
+            name="content"
+            rules={[{ required: true, message: "Please input your content!" }]}
+          >
+            <Input.TextArea rows={6} />
+          </Form.Item>
 
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Submit
-          </Button>
-        </Form.Item>
-      </Form>
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      )}
     </section>
   );
 };

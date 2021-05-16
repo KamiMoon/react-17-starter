@@ -43,6 +43,14 @@ export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
   return response;
 });
 
+export const fetchPost = createAsyncThunk(
+  "posts/fetchPost",
+  async (payload: { id: string }) => {
+    const response = await client.get(`/fakeApi/posts/${payload.id}`);
+    return response;
+  }
+);
+
 export const addNewPost = createAsyncThunk(
   "posts/addNewPost",
   // The payload creator receives the partial `{title, content, user}` object
@@ -128,6 +136,7 @@ const postsSlice = createSlice({
 
     builder.addCase(addNewPost.fulfilled, postsAdapter.addOne);
     builder.addCase(fetchPostsByUserId.fulfilled, postsAdapter.upsertMany);
+    builder.addCase(fetchPost.fulfilled, postsAdapter.upsertOne);
   },
 });
 

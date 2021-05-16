@@ -1,16 +1,22 @@
-import React from "react";
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { Link } from "react-router-dom";
 import { PostAuthor } from "./PostAuthor";
 import { TimeAgo } from "./TimeAgo";
 import { ReactionButtons } from "./ReactionButtons";
 
-import { selectPostById } from "../../redux/slicers/postsSlice";
+import { selectPostById, fetchPost } from "../../redux/slicers/postsSlice";
 
 export const SinglePostPage = ({ match }: any) => {
   const { postId } = match.params;
 
-  const post = useSelector((state: any) => selectPostById(state, postId));
+  const dispatch = useAppDispatch();
+
+  const post = useAppSelector((state: any) => selectPostById(state, postId));
+
+  useEffect(() => {
+    dispatch(fetchPost({ id: postId }));
+  }, []);
 
   if (!post) {
     return (

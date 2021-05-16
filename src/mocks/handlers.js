@@ -28,8 +28,6 @@ export const handlers = [
   rest.get("/fakeApi/user/:id", (req, res, ctx) => {
     console.log("fake api get user");
 
-    console.log(req.params);
-
     const user = users.find((i) => i.id === req.params.id);
 
     return res(ctx.status(200), ctx.json(user));
@@ -43,6 +41,12 @@ export const handlers = [
   rest.get("/fakeApi/posts", (req, res, ctx) => {
     console.log("fake api login called");
     return res(ctx.status(200), ctx.json(posts));
+  }),
+
+  rest.get("/fakeApi/posts/:id", (req, res, ctx) => {
+    const post = posts.find((i) => i.id === req.params.id);
+
+    return res(ctx.status(200), ctx.json(post));
   }),
 
   rest.get("/fakeApi/postsByUser/:userId", (req, res, ctx) => {
