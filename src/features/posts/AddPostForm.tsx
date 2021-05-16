@@ -27,7 +27,11 @@ export const AddPostForm = () => {
 
   const canSave = addRequestStatus === "idle";
 
-  const onSavePostClicked = async (values: any) => {
+  const onSavePostClicked = async (values: {
+    title: string;
+    content: string;
+    userId: string;
+  }) => {
     if (canSave) {
       try {
         const title = values.title;

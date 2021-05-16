@@ -36,7 +36,7 @@ export const EditPostForm = ({ match }: Match) => {
     dispatch(fetchPost({ id: postId }));
   }, [dispatch, postId]);
 
-  const onSavePostClicked = (values: any) => {
+  const onSavePostClicked = (values: { title: string; content: string }) => {
     if (values.title && values.content) {
       const title = values.title;
       const content = values.content;
