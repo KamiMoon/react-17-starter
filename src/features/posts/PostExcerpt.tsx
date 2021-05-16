@@ -1,4 +1,4 @@
-import { useAppSelector } from "../../redux/hooks";
+import { useAppSelector } from "redux/hooks";
 import { Card } from "antd";
 
 import { PostAuthor } from "./PostAuthor";
@@ -6,7 +6,7 @@ import { TimeAgo } from "./TimeAgo";
 import { ReactionButtons } from "./ReactionButtons";
 import { Link } from "react-router-dom";
 
-import { selectPostById } from "../../redux/slicers/postsSlice";
+import { selectPostById } from "redux/slicers/postsSlice";
 
 export const PostExcerpt = ({ postId }: { postId: string }) => {
   const post = useAppSelector((state) => selectPostById(state, postId));

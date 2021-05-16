@@ -1,6 +1,6 @@
 import { PostExcerpt } from "./PostExcerpt";
-import { render, screen } from "../../test-utils";
-import { post1 } from "../../mocks/data/mock-posts";
+import { render, screen } from "test-utils";
+import { post1 } from "mocks/data/mock-posts";
 
 test("renders", () => {
   render(<PostExcerpt postId={"1"} />, {

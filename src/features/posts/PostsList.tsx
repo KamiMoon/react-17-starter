@@ -1,9 +1,9 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { Link } from "react-router-dom";
 import { PostExcerpt } from "./PostExcerpt";
 
-import { fetchPosts, selectPostIds } from "../../redux/slicers/postsSlice";
+import { fetchPosts, selectPostIds } from "redux/slicers/postsSlice";
 
 export const PostsList = () => {
   const dispatch = useAppDispatch();

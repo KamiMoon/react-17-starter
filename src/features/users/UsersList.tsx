@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { Link } from "react-router-dom";
-import { fetchUsers, selectAllUsers } from "../../redux/slicers/usersSlice";
+import { fetchUsers, selectAllUsers } from "redux/slicers/usersSlice";
 
 import { Table } from "antd";
 
-import { User } from "../../models/User";
+import { User } from "models/User";
 
 const columns = [
   {

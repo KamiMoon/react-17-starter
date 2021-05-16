@@ -1,6 +1,6 @@
 import { UsersList } from "./UsersList";
-import { render, screen } from "../../test-utils";
-import { user1 } from "../../mocks/data/mock-users";
+import { render, screen } from "test-utils";
+import { user1 } from "mocks/data/mock-users";
 
 const initialState = {
   users: {

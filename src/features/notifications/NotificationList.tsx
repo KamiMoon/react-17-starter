@@ -1,14 +1,14 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { formatDistanceToNow, parseISO } from "date-fns";
 
-import { selectAllUsers } from "../../redux//slicers/usersSlice";
+import { selectAllUsers } from "redux//slicers/usersSlice";
 
 import {
   selectAllNotifications,
   allNotificationsRead,
-} from "../../redux/slicers/notificationSlice";
-import { User } from "../../models/User";
+} from "redux/slicers/notificationSlice";
+import { User } from "models/User";
 //import classnames from 'classnames'
 
 export const NotificationsList = () => {

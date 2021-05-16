@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { useHistory } from "react-router-dom";
 
 import {
   postUpdated,
   selectPostById,
   fetchPost,
-} from "../../redux/slicers/postsSlice";
+} from "redux/slicers/postsSlice";
 
 import { Form, Input, Button } from "antd";
 

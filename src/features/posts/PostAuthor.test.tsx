@@ -1,6 +1,6 @@
 import { PostAuthor } from "./PostAuthor";
-import { render, screen } from "../../test-utils";
-import { user1 } from "../../mocks/data/mock-users";
+import { render, screen } from "test-utils";
+import { user1 } from "mocks/data/mock-users";
 
 test("renders", () => {
   render(<PostAuthor userId={"1"} />, {

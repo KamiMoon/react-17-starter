@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useHistory } from "react-router-dom";
 
-import { addNewPost } from "../../redux/slicers/postsSlice";
-import { selectAllUsers } from "../../redux/slicers/usersSlice";
+import { addNewPost } from "redux/slicers/postsSlice";
+import { selectAllUsers } from "redux/slicers/usersSlice";
 
 import { Form, Input, Button, Select } from "antd";
 const { Option } = Select;

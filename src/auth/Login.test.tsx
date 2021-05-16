@@ -1,5 +1,5 @@
 import Login from "./Login";
-import { render, screen } from "../test-utils";
+import { render, screen } from "test-utils";
 
 test("renders", () => {
   render(<Login />, {

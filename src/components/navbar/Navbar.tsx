@@ -1,8 +1,8 @@
 import { Layout, Menu } from "antd";
-import { useAppSelector, useAppDispatch } from "../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "redux/hooks";
 
 import { Link, useLocation } from "react-router-dom";
-import { logout } from "../../redux/slicers/authSlice";
+import { logout } from "redux/slicers/authSlice";
 
 const { Header } = Layout;
 

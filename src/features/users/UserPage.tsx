@@ -1,12 +1,12 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { Link } from "react-router-dom";
 
-import { selectUserById, fetchUser } from "../../redux/slicers/usersSlice";
+import { selectUserById, fetchUser } from "redux/slicers/usersSlice";
 import {
   selectPostsByUser,
   fetchPostsByUserId,
-} from "../../redux/slicers/postsSlice";
+} from "redux/slicers/postsSlice";
 
 interface Match {
   match: {

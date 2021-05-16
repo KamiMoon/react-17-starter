@@ -1,6 +1,6 @@
 import { PostsList } from "./PostsList";
-import { render, screen } from "../../test-utils";
-import { post1 } from "../../mocks/data/mock-posts";
+import { render, screen } from "test-utils";
+import { post1 } from "mocks/data/mock-posts";
 
 test("renders with no posts", () => {
   render(<PostsList />, {

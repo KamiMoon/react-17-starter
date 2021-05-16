@@ -1,10 +1,10 @@
 import { useState } from "react";
 
-import { useAppDispatch } from "../redux/hooks";
+import { useAppDispatch } from "redux/hooks";
 import { useHistory } from "react-router-dom";
 import { unwrapResult } from "@reduxjs/toolkit";
 
-import { login } from "../redux/slicers/authSlice";
+import { login } from "redux/slicers/authSlice";
 
 import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";

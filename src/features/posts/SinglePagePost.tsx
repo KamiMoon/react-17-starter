@@ -1,11 +1,11 @@
 import { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { useAppDispatch, useAppSelector } from "redux/hooks";
 import { Link } from "react-router-dom";
 import { PostAuthor } from "./PostAuthor";
 import { TimeAgo } from "./TimeAgo";
 import { ReactionButtons } from "./ReactionButtons";
 
-import { selectPostById, fetchPost } from "../../redux/slicers/postsSlice";
+import { selectPostById, fetchPost } from "redux/slicers/postsSlice";
 
 interface Match {
   match: {

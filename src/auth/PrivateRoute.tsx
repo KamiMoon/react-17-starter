@@ -1,4 +1,4 @@
-import { useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "redux/hooks";
 import { Route, Redirect } from "react-router-dom";
 
 export default function PrivateRoute(props: any) {

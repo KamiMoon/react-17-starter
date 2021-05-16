@@ -1,6 +1,6 @@
 import { EditPostForm } from "./EditPostForm";
-import { render, screen } from "../../test-utils";
-import { post1 } from "../../mocks/data/mock-posts";
+import { render, screen } from "test-utils";
+import { post1 } from "mocks/data/mock-posts";
 
 const match = {
   params: {
