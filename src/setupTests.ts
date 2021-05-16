@@ -3,7 +3,7 @@
 // expect(element).toHaveTextContent(/react/i)
 // learn more: https://github.com/testing-library/jest-dom
 import "@testing-library/jest-dom";
-import { server } from "./mocks/server.js";
+import { server } from "./mocks/server";
 
 //https://hceris.com/jest-fail-test-if-unexpected-network-request-happens/
 
