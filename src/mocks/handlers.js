@@ -1,56 +1,44 @@
 // src/mocks/handlers.js
 import { rest } from "msw";
-
-const post = {
-  id: "1",
-  date: new Date().toISOString(),
-  title: "My Title",
-  content: "My content",
-  user: 1,
-  reactions: {
-    thumbsUp: 0,
-    hooray: 0,
-    heart: 0,
-    rocket: 0,
-    eyes: 0,
-  },
-};
+import { posts } from "./data/mock-posts";
+import { users } from "./data/mock-users";
 
 export const handlers = [
-  rest.post("/login", (req, res, ctx) => {
-    // Persist user's authentication in the session
-    sessionStorage.setItem("is-authenticated", "true");
+  rest.post("/fakeApi/login", (req, res, ctx) => {
+    console.log("fake api login called");
 
-    return res(
-      // Respond with a 200 status code
-      ctx.status(200)
-    );
+    const result = {
+      token: "abcd",
+      roles: [
+        {
+          name: "Admin",
+          isActive: true,
+        },
+      ],
+    };
+
+    return res(ctx.status(200), ctx.json(result));
   }),
 
-  rest.get("/user", (req, res, ctx) => {
-    // Check if the user is authenticated in this session
-    const isAuthenticated = sessionStorage.getItem("is-authenticated");
+  rest.get("/fakeApi/users", (req, res, ctx) => {
+    console.log("fake api users called");
+    return res(ctx.status(200), ctx.json([users]));
+  }),
 
-    if (!isAuthenticated) {
-      // If not authenticated, respond with a 403 error
-      return res(
-        ctx.status(403),
-        ctx.json({
-          errorMessage: "Not authorized",
-        })
-      );
-    }
-
-    // If authenticated, return a mocked user details
-    return res(
-      ctx.status(200),
-      ctx.json({
-        username: "admin",
-      })
-    );
+  rest.post("/fakeApi/notifications", (req, res, ctx) => {
+    console.log("fake api notifications called");
+    return res(ctx.status(200), ctx.json([]));
   }),
 
   rest.get("/fakeApi/posts", (req, res, ctx) => {
-    return res(ctx.status(200), ctx.json([post]));
+    console.log("fake api login called");
+    return res(ctx.status(200), ctx.json([posts]));
+  }),
+
+  rest.post("/fakeApi/posts", (req, res, ctx) => {
+    console.log(req);
+    console.log("fake api create post called");
+
+    return res(ctx.status(200), ctx.json([posts]));
   }),
 ];

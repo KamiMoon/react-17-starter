@@ -108,6 +108,10 @@ new Server({
       return post.comments;
     });
 
+    this.get("/posts", (schema, req) => {
+      return [];
+    });
+
     this.get("/notifications", (schema, req) => {
       const numNotifications = getRandomInt(1, 5);
 

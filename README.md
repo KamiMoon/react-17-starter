@@ -54,9 +54,6 @@ Uses:
 - [axios](https://github.com/axios/axios)
 - [redux](https://redux.js.org/)
 - [react-redux](https://github.com/reduxjs/react-redux)
-- [redux-axios-middleware](https://github.com/svrcekmichal/redux-axios-middleware)
-- [redux-form](https://redux-form.com/7.4.2/)
-- [material-ui](https://material-ui.com/)
 
 ## Formatting
 
@@ -77,7 +74,6 @@ Will automatically deploy via merges into relevant branches using Code Pipeline.
 
 ## TODOs:
 
-- Auth
 - Lazy loading
 - Real Backend
 
