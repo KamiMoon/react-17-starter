@@ -76,7 +76,5 @@ Will automatically deploy via merges into relevant branches using Code Pipeline.
 
 - Lazy loading
 - Real Backend
-
-## Bugs
-
-- Reloading page on the user list and clicking on user does not properly show posts. Have to go to posts page first.
+- CRUD and other things that aren' peristing
+- Slow Tests
