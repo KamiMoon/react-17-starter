@@ -4,7 +4,7 @@ import rootReducer from "./rootReducer";
 let initialState: any = {};
 
 try {
-  let storageItem = sessionStorage.getItem("auth");
+  let storageItem = localStorage.getItem("auth");
   if (storageItem) {
     initialState.auth = JSON.parse(storageItem);
   }

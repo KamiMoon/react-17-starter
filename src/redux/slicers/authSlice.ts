@@ -56,7 +56,7 @@ export const authSlice = createSlice({
   reducers: {
     logout() {
       try {
-        sessionStorage.removeItem("auth");
+        localStorage.removeItem("auth");
       } catch (e) {
         console.log(e);
       }
@@ -79,7 +79,7 @@ export const authSlice = createSlice({
       state.hasRequiredPrivileges = hasRequiredPrivileges(action.payload.roles);
 
       try {
-        sessionStorage.setItem("auth", JSON.stringify(state));
+        localStorage.setItem("auth", JSON.stringify(state));
       } catch (e) {
         console.log(e);
       }
