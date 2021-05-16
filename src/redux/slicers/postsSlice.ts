@@ -54,6 +54,14 @@ export const addNewPost = createAsyncThunk(
   }
 );
 
+export const fetchPostsByUserId = createAsyncThunk(
+  "posts/fetchPostsByUser",
+  async (payload: { id: string }) => {
+    const response = await client.get(`/fakeApi/postsByUser/${payload.id}`);
+    return response;
+  }
+);
+
 const postsSlice = createSlice({
   name: "posts",
   initialState,
@@ -119,6 +127,7 @@ const postsSlice = createSlice({
     // });
 
     builder.addCase(addNewPost.fulfilled, postsAdapter.addOne);
+    builder.addCase(fetchPostsByUserId.fulfilled, postsAdapter.upsertMany);
   },
 });
 

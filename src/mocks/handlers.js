@@ -45,6 +45,14 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(posts));
   }),
 
+  rest.get("/fakeApi/postsByUser/:userId", (req, res, ctx) => {
+    console.log("fake api login called");
+
+    const foundPosts = posts.filter((i) => i.user === req.params.userId);
+
+    return res(ctx.status(200), ctx.json(foundPosts));
+  }),
+
   rest.post("/fakeApi/posts", (req, res, ctx) => {
     console.log(req);
     console.log("fake api create post called");

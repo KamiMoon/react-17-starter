@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 
 import { selectUserById, fetchUser } from "../../redux/slicers/usersSlice";
 import {
-  selectAllPosts,
   selectPostsByUser,
+  fetchPostsByUserId,
 } from "../../redux/slicers/postsSlice";
 
 export const UserPage = ({ match }) => {
@@ -20,6 +20,7 @@ export const UserPage = ({ match }) => {
 
   useEffect(() => {
     dispatch(fetchUser({ id: userId }));
+    dispatch(fetchPostsByUserId({ id: userId }));
   }, []);
 
   const postTitles = postsForUser.map((post) => (
