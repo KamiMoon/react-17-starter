@@ -1,5 +1,6 @@
 import { UserPage } from "./UserPage";
 import { render, screen } from "../../test-utils";
+import { user1 } from "../../mocks/data/mock-users";
 
 const post = {
   id: "1",
@@ -14,11 +15,6 @@ const post = {
     rocket: 0,
     eyes: 0,
   },
-};
-
-const user = {
-  id: "1",
-  name: "Eric",
 };
 
 const match = {
@@ -37,7 +33,7 @@ const initialState = {
   users: {
     ids: ["1"],
     entities: {
-      "1": user,
+      "1": user1,
     },
   },
 };

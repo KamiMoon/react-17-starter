@@ -3,9 +3,17 @@ import { client } from "../../api/client";
 
 export const login = createAsyncThunk(
   "posts/login",
-  async (payload: { email: string; password: string }) => {
-    const response = await client.post("/fakeApi/login", { post: payload });
-    return response;
+  async (payload: { email: string; password: string }, thunkApi) => {
+    let response;
+    try {
+      response = await client.post("/fakeApi/login", { post: payload });
+      console.log(response);
+
+      return response;
+    } catch (e) {
+      console.log(e);
+      return thunkApi.rejectWithValue(e);
+    }
   }
 );
 
@@ -46,8 +54,16 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    logout(state, action) {
-      return initialState;
+    logout() {
+      try {
+        sessionStorage.removeItem("auth");
+      } catch (e) {
+        console.log(e);
+      }
+
+      return {
+        ...initialState,
+      };
     },
   },
   extraReducers: (builder) => {
@@ -61,6 +77,12 @@ export const authSlice = createSlice({
       state.token = action.payload.token;
       state.roles = action.payload.roles;
       state.hasRequiredPrivileges = hasRequiredPrivileges(action.payload.roles);
+
+      try {
+        sessionStorage.setItem("auth", JSON.stringify(state));
+      } catch (e) {
+        console.log(e);
+      }
     });
     builder.addCase(login.rejected, (state, action) => {
       state.status = "failed";

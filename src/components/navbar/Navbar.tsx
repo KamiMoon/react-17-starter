@@ -1,11 +1,13 @@
 import { Layout, Menu } from "antd";
-import { useAppSelector } from "../../redux/hooks";
+import { useAppSelector, useAppDispatch } from "../../redux/hooks";
 
 import { Link, useLocation } from "react-router-dom";
+import { logout } from "../../redux/slicers/authSlice";
 
 const { Header } = Layout;
 
 export default function Navbar() {
+  const dispatch = useAppDispatch();
   const auth = useAppSelector((state) => state.auth);
 
   let defaultSelectedKeys = ["posts"];
@@ -17,6 +19,10 @@ export default function Navbar() {
   } else if (location.pathname.includes("login")) {
     defaultSelectedKeys = ["login"];
   }
+
+  const doLogout = () => {
+    dispatch(logout());
+  };
 
   return (
     <Header>
@@ -36,9 +42,17 @@ export default function Navbar() {
           </Menu.Item>
         )}
 
-        <Menu.Item key="login">
-          <Link to="/login">Login</Link>
-        </Menu.Item>
+        {!auth.isAuthenticated && (
+          <Menu.Item key="login">
+            <Link to="/login">Login</Link>
+          </Menu.Item>
+        )}
+
+        {auth.isAuthenticated && (
+          <Menu.Item key="logout">
+            <a onClick={doLogout}>Logout</a>
+          </Menu.Item>
+        )}
       </Menu>
     </Header>
   );
