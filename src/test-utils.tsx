@@ -7,6 +7,7 @@ import { Provider } from "react-redux";
 // Import your own reducer
 import rootReducer from "./redux/rootReducer";
 import { MemoryRouter } from "react-router-dom";
+import { Router } from "react-router-dom";
 
 function render(
   ui: JSX.Element,
@@ -22,11 +23,15 @@ function render(
   }: any = {}
 ) {
   function Wrapper({ children }: any) {
-    return (
-      <Provider store={store}>
-        <MemoryRouter>{children}</MemoryRouter>
-      </Provider>
-    );
+    let routerWrappedComponent = <MemoryRouter>{children}</MemoryRouter>;
+
+    if (renderOptions.history) {
+      routerWrappedComponent = (
+        <Router history={renderOptions.history}>{children}</Router>
+      );
+    }
+
+    return <Provider store={store}>{routerWrappedComponent}</Provider>;
   }
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }

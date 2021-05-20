@@ -61,7 +61,9 @@ export const SinglePostPage = ({ match }: Match) => {
         <TimeAgo timestamp={post.date} />
         <ReactionButtons post={post} />
         <Space>
-          <Link to={`/posts/edit/${post.id}`}>Edit Post</Link>
+          <Link className="ant-btn" to={`/posts/edit/${post.id}`}>
+            Edit Post
+          </Link>
           <Button onClick={doDelete}>Delete Post</Button>
         </Space>
       </article>
