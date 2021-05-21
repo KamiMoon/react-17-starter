@@ -78,3 +78,6 @@ Will automatically deploy via merges into relevant branches using Code Pipeline.
 - Real Backend
 - CRUD and other things that aren' peristing
 - Slow Tests
+
+-Tests for redux sliclers
+
