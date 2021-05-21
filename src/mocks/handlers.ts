@@ -7,7 +7,6 @@ import { Post } from "models/Post";
 export const handlers = [
   //login
   rest.post("/fakeApi/login", (req, res, ctx) => {
-    console.log("fake api login called");
 
     const result = {
       token: "abcd",
@@ -25,12 +24,10 @@ export const handlers = [
   //users
 
   rest.get("/fakeApi/users", (req, res, ctx) => {
-    console.log("fake api users called");
     return res(ctx.status(200), ctx.json(users));
   }),
 
   rest.get("/fakeApi/user/:id", (req, res, ctx) => {
-    console.log("fake api get user");
 
     const user = users.find((i) => i.id === req.params.id);
     if (user) {
@@ -41,13 +38,11 @@ export const handlers = [
 
   //notifications
   rest.post("/fakeApi/notifications", (req, res, ctx) => {
-    console.log("fake api notifications called");
     return res(ctx.status(200), ctx.json([]));
   }),
 
   //posts
   rest.get("/fakeApi/posts", (req, res, ctx) => {
-    console.log("fake api login called");
     return res(ctx.status(200), ctx.json(posts));
   }),
 
@@ -61,7 +56,6 @@ export const handlers = [
   }),
 
   rest.get("/fakeApi/postsByUser/:userId", (req, res, ctx) => {
-    console.log("fake api login called");
 
     const foundPosts = posts.filter((i) => i.user === req.params.userId);
 

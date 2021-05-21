@@ -19,6 +19,8 @@ const Login = () => {
   const disabled = addRequestStatus === "pending";
 
   const onFinish = async (values: { username: string; password: string }) => {
+
+    console.log('trying to submit form')
     try {
       setAddRequestStatus("pending");
       const resultAction = await dispatch(
