@@ -17,6 +17,14 @@ export const store = configureStore({
   preloadedState: initialState,
 });
 
+export function createStore(initialState: any = {}) {
+  const store = configureStore({
+    reducer: rootReducer,
+    preloadedState: initialState,
+  });
+  return store;
+}
+
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
