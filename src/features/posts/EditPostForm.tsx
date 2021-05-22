@@ -7,6 +7,7 @@ import {
   updatePost,
 } from "redux/slicers/postsSlice";
 import { Form, Input, Button } from "antd";
+import { Post } from "models/Post";
 import { unwrapResult } from "@reduxjs/toolkit";
 
 const layout = {
@@ -45,7 +46,7 @@ export const EditPostForm = ({ match }: Match) => {
         const content = values.content;
 
         const updateAction = await dispatch(
-          updatePost({ id: postId, title, content })
+          updatePost({ id: postId, title, content } as Post)
         );
         unwrapResult(updateAction);
         history.push(`/posts/view/${postId}`);

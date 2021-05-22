@@ -58,8 +58,8 @@ export function updatePost(id: string, updateData: Post): Post | undefined {
 
   for (; i < posts.length; i++) {
     if (posts[i].id === id) {
-      postToUpdate = posts[i];
       posts[i] = { ...posts[i], ...updateData };
+      postToUpdate = posts[i];
       break;
     }
   }

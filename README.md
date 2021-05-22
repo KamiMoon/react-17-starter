@@ -77,6 +77,7 @@ Will automatically deploy via merges into relevant branches using Code Pipeline.
 - Lazy loading
 - Real Backend
 - CRUD and other things that aren' peristing
+    -Reaction button
 - Slow Tests
 
 -Tests for redux sliclers

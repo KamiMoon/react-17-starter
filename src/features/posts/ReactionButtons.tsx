@@ -1,7 +1,7 @@
-import { useDispatch } from "react-redux";
+import { useAppDispatch } from "redux/hooks";
 import { Post } from "models/Post";
-
-import { reactionAdded } from "redux/slicers/postsSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
+import { updatePost } from "redux/slicers/postsSlice";
 
 const reactionEmoji = {
   thumbsUp: "👍",
@@ -12,7 +12,23 @@ const reactionEmoji = {
 };
 
 export const ReactionButtons = ({ post }: { post: Post }) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
+
+  const onReactionClicked = async (name: string) => {
+    try {
+      const deepCopy = JSON.parse(JSON.stringify(post));
+
+      let foundReaction: any = deepCopy.reactions;
+      foundReaction[name]++;
+
+      const updateAction = await dispatch(
+        updatePost(deepCopy)
+      );
+      unwrapResult(updateAction);
+    } catch (err) {
+      console.error("Failed to save the post: ", err);
+    }
+  }
 
   const reactionButtons = Object.entries(reactionEmoji).map(([name, emoji]) => {
     let reactions: any = post.reactions;
@@ -21,9 +37,9 @@ export const ReactionButtons = ({ post }: { post: Post }) => {
         key={name}
         type="button"
         className="muted-button reaction-button"
-        onClick={() =>
-          dispatch(reactionAdded({ postId: post.id, reaction: name }))
-        }
+        onClick={() => {
+          onReactionClicked(name);
+        }}
       >
         {emoji} {reactions[name]}
       </button>

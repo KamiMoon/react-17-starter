@@ -40,7 +40,7 @@ export const addNewPost = createAsyncThunk(
 
 export const updatePost = createAsyncThunk(
   "posts/updatePost",
-  async (post: { id: string; title: string; content: string }) => {
+  async (post: Post) => {
     const response = await client.put(`/fakeApi/posts/${post.id}`, post);
     return response.data;
   }
@@ -74,14 +74,14 @@ const postsSlice = createSlice({
     //     existingPost.content = content;
     //   }
     // },
-    reactionAdded(state, action) {
-      const { postId, reaction } = action.payload;
-      const existingPost = state.entities[postId];
-      if (existingPost && existingPost.reactions && reaction) {
-        let foundReaction: any = existingPost.reactions;
-        foundReaction[reaction]++;
-      }
-    },
+    // reactionAdded(state, action) {
+    //   const { postId, reaction } = action.payload;
+    //   const existingPost = state.entities[postId];
+    //   if (existingPost && existingPost.reactions && reaction) {
+    //     let foundReaction: any = existingPost.reactions;
+    //     foundReaction[reaction]++;
+    //   }
+    // },
   },
   extraReducers: (builder) => {
     builder.addCase(fetchPosts.pending, (state, action) => {
@@ -102,10 +102,17 @@ const postsSlice = createSlice({
     builder.addCase(fetchPostsByUserId.fulfilled, postsAdapter.upsertMany);
     builder.addCase(fetchPost.fulfilled, postsAdapter.upsertOne);
     builder.addCase(removePost.fulfilled, postsAdapter.removeOne);
+    //builder.addCase(updatePost.fulfilled, postsAdapter.updateOne);
+
+    builder.addCase(updatePost.fulfilled, (state, action) => {
+      state.status = "succeeded";
+
+      state.entities[action.payload.id] = action.payload;
+    });
   },
 });
 
-export const { reactionAdded } = postsSlice.actions;
+//export const { reactionAdded } = postsSlice.actions;
 
 export default postsSlice.reducer;
 
