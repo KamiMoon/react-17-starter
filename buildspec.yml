@@ -9,4 +9,4 @@ phases:
   build:
     commands:
       - npm run build
-      - aws s3 cp dist s3://something/ --recursive
+      - aws s3 cp dist s3://react-17-starter-website/ --recursive
