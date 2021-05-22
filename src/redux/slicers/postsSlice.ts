@@ -8,6 +8,8 @@ import { client } from "api/client";
 import { Post } from "models/Post";
 import type { RootState } from "redux/store";
 
+const DOMAIN = process.env.REACT_APP_API_DOMAIN;
+
 const postsAdapter = createEntityAdapter<Post>({
   sortComparer: (a, b) => b.date.localeCompare(a.date),
 });
@@ -18,14 +20,14 @@ const initialState = postsAdapter.getInitialState({
 });
 
 export const fetchPosts = createAsyncThunk("posts/fetchPosts", async () => {
-  const response = await client.get("/fakeApi/posts");
+  const response = await client.get(`${DOMAIN}/posts`);
   return response.data;
 });
 
 export const fetchPost = createAsyncThunk(
   "posts/fetchPost",
   async (payload: { id: string }) => {
-    const response = await client.get(`/fakeApi/posts/${payload.id}`);
+    const response = await client.get(`${DOMAIN}/posts/${payload.id}`);
     return response.data;
   }
 );
@@ -33,7 +35,7 @@ export const fetchPost = createAsyncThunk(
 export const addNewPost = createAsyncThunk(
   "posts/addNewPost",
   async (post: { title: string; content: string; user: string }) => {
-    const response = await client.post("/fakeApi/posts", post);
+    const response = await client.post(`${DOMAIN}/posts`, post);
     return response.data;
   }
 );
@@ -41,7 +43,7 @@ export const addNewPost = createAsyncThunk(
 export const updatePost = createAsyncThunk(
   "posts/updatePost",
   async (post: Post) => {
-    const response = await client.put(`/fakeApi/posts/${post.id}`, post);
+    const response = await client.put(`${DOMAIN}/posts/${post.id}`, post);
     return response.data;
   }
 );
@@ -49,7 +51,7 @@ export const updatePost = createAsyncThunk(
 export const fetchPostsByUserId = createAsyncThunk(
   "posts/fetchPostsByUser",
   async (payload: { id: string }) => {
-    const response = await client.get(`/fakeApi/postsByUser/${payload.id}`);
+    const response = await client.get(`${DOMAIN}/postsByUser/${payload.id}`);
     return response.data;
   }
 );
@@ -57,7 +59,7 @@ export const fetchPostsByUserId = createAsyncThunk(
 export const removePost = createAsyncThunk(
   "posts/removePost",
   async (payload: { id: string }) => {
-    const response = await client.delete(`/fakeApi/posts/${payload.id}`);
+    const response = await client.delete(`${DOMAIN}/posts/${payload.id}`);
     return response.data.id;
   }
 );

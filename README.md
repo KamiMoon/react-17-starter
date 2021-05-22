@@ -82,3 +82,5 @@ Will automatically deploy via merges into relevant branches using Code Pipeline.
 
 -Tests for redux sliclers
 
+
+-Ordering is off

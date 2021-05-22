@@ -1,12 +1,14 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { client } from "api/client";
 
+const DOMAIN = process.env.REACT_APP_API_DOMAIN;
+
 export const login = createAsyncThunk(
   "posts/login",
   async (payload: { email: string; password: string }, thunkApi) => {
     let response;
     try {
-      response = await client.post("/fakeApi/login", { post: payload });
+      response = await client.post(`${DOMAIN}/login`, { post: payload });
       return response.data;
     } catch (e) {
       console.log(e);
