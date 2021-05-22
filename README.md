@@ -70,7 +70,7 @@ Will automatically deploy via merges into relevant branches using Code Pipeline.
 
 | ENVIRONMENT | URL  |
 | :---------: | :--: |
-|    PROD     | TODO |
+|    PROD     | http://react-17-starter-website.s3-website.us-east-2.amazonaws.com |
 
 ## TODOs:
 

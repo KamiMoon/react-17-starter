@@ -39,7 +39,7 @@ export const PostsList = () => {
 
   return (
     <section className="posts-list">
-      <h2>Posts</h2>
+      <h2>Posts 2</h2>
       <Link to="/posts/add">Add Post</Link>
       {content}
     </section>
